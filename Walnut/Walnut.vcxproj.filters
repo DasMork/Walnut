@@ -24,6 +24,9 @@
     <ClInclude Include="src\Walnut.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="src\Walnut\Entrypoint.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Walnut\Application.cpp">

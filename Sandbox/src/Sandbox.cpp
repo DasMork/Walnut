@@ -1,6 +1,24 @@
 #include <Walnut.h>
 
-void main()
+class Sandbox : public Walnut::Application
 {
 
+public:
+	Sandbox()
+	{
+
+	}
+
+	~Sandbox()
+	{
+
+	}
+};
+
+
+Walnut::Application* Walnut::CreateApplication()
+{
+	return new Sandbox();
 }
+
+

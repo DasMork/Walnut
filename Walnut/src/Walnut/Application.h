@@ -3,7 +3,7 @@
 
 namespace Walnut {
 
-	class Application
+	class WALNUT_API Application
 	{
 	public:
 		Application();
@@ -11,5 +11,7 @@ namespace Walnut {
 
 		void Run();
 	};
+
+	Application* CreateApplication();
 }
 

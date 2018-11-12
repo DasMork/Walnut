@@ -1,1 +1,2 @@
-﻿LINK : fatal error LNK1104: Datei "C:\Users\Jannik\Documents\GitHub\Walnut-Engine\bin\Debug-x64\Walnut\Walnut.lib" kann nicht geöffnet werden.
+﻿  Sandbox.cpp
+  Sandbox.vcxproj -> E:\GitHub\Walnut-Engine\bin\Debug-x64\Sandbox\Sandbox.exe
