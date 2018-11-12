@@ -1,2 +1,6 @@
 ﻿  Sandbox.cpp
+e:\github\walnut-engine\walnut\src\walnut\log.h(18): warning C4251: "Walnut::Log::s_CoreLogger": class "std::shared_ptr<spdlog::logger>" erfordert eine DLL-Schnittstelle, die von Clients von class "Walnut::Log" verwendet wird
+  e:\github\walnut-engine\walnut\extern\spdlog\include\spdlog\logger.h(146): note: Siehe Deklaration von "std::shared_ptr<spdlog::logger>"
+e:\github\walnut-engine\walnut\src\walnut\log.h(19): warning C4251: "Walnut::Log::s_ClientLogger": class "std::shared_ptr<spdlog::logger>" erfordert eine DLL-Schnittstelle, die von Clients von class "Walnut::Log" verwendet wird
+  e:\github\walnut-engine\walnut\extern\spdlog\include\spdlog\logger.h(146): note: Siehe Deklaration von "std::shared_ptr<spdlog::logger>"
   Sandbox.vcxproj -> E:\GitHub\Walnut-Engine\bin\Debug-x64\Sandbox\Sandbox.exe

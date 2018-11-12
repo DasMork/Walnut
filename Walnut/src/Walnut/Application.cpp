@@ -15,7 +15,6 @@ void Walnut::Application::Run()
 {
 	for (;;)
 	{
-		printf("test");
 	}
 }
 

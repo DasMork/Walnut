@@ -6,7 +6,7 @@ class Sandbox : public Walnut::Application
 public:
 	Sandbox()
 	{
-
+		WN_LOG("Initialized Sandbox!");
 	}
 
 	~Sandbox()
