@@ -16,10 +16,12 @@
     <ClInclude Include="src\Walnut\Application.h" />
     <ClInclude Include="src\Walnut\Core.h" />
     <ClInclude Include="src\Walnut\Entrypoint.h" />
+    <ClInclude Include="src\Walnut\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Walnut\Log.cpp" />
     <ClCompile Include="src\Walnut\Application.cpp" />
+    <ClCompile Include="src\Walnut\Window.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -68,8 +70,15 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>WN_PLATFORM_WINDOWS;WN_BUILD_DLL</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Walnut\Extern\spdlog\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Walnut\Extern\spdlog\include;$(SolutionDir)Walnut\Extern\glew\include;$(SolutionDir)Walnut\Extern\glfw\include</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)Walnut\Extern\glew\lib; $(SolutionDir)Walnut\Extern\glfw\lib-vc2015</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy /Y "$(TargetDir)$(ProjectName).dll" "$(SolutionDir)bin\$(Configuration)-$(Platform)\Sandbox\$(ProjectName).dll"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -80,12 +89,17 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>WN_PLATFORM_WINDOWS;WN_BUILD_DLL</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Walnut\Extern\spdlog\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Walnut\Extern\spdlog\include;$(SolutionDir)Walnut\Extern\glew\include;$(SolutionDir)Walnut\Extern\glfw\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)Walnut\Extern\glew\lib; $(SolutionDir)Walnut\Extern\glfw\lib-vc2015</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /Y "$(TargetDir)$(ProjectName).dll" "$(SolutionDir)bin\$(Configuration)-$(Platform)\Sandbox\$(ProjectName).dll"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,7 +2,6 @@
 
 class Sandbox : public Walnut::Application
 {
-
 public:
 	Sandbox()
 	{
@@ -11,7 +10,7 @@ public:
 
 	~Sandbox()
 	{
-
+		WN_LOG("Shutdown Sandbox!");
 	}
 };
 
