@@ -5,19 +5,17 @@ Walnut::Test::Window::Window(GLFWwindow* window)
 {
 	mWindow = window;
 }
-Walnut::Test::Window::~Window() 
+Walnut::Test::Window::~Window()
 {
 
 }
 
 Walnut::Test::Window* Walnut::Test::Window::WN_CreateWindow(const int width, const int height, const char* name)
 {
-	GLFWwindow* window = nullptr;
-
 	if (!glfwInit())
 		WN_CORE_ERROR("Failed to init GLFW!");
 
-	window = glfwCreateWindow(width, height, name, NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(width, height, name, NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
@@ -26,6 +24,17 @@ Walnut::Test::Window* Walnut::Test::Window::WN_CreateWindow(const int width, con
 
 	glfwMakeContextCurrent(window);
 	WN_CORE_LOG("Created GLFW Window!");
+	GLenum err = glewInit();
+	if (GLEW_OK != err)
+	{
+		WN_CORE_ERROR("Failed to init GLEW!");
+		WN_CORE_ERROR(glewGetErrorString(err));
+	}
+	else
+	{
+		WN_CORE_LOG("Initialized Glew!");
+	}
+
 	return new Window(window);
 }
 

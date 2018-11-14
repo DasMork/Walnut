@@ -1,6 +1,5 @@
 #pragma once
 
-#include <GLFW/glfw3.h>
 #include "Core.h"
 #include "Window.h"
 #include "Log.h"

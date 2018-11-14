@@ -69,7 +69,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>WN_PLATFORM_WINDOWS;WN_BUILD_DLL</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WN_PLATFORM_WINDOWS;WN_BUILD_DLL;GLEW_STATIC ;</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)Walnut\Extern\spdlog\include;$(SolutionDir)Walnut\Extern\glew\include;$(SolutionDir)Walnut\Extern\glfw\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -88,7 +88,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>WN_PLATFORM_WINDOWS;WN_BUILD_DLL</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WN_PLATFORM_WINDOWS;WN_BUILD_DLL;GLEW_STATIC ;</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)Walnut\Extern\spdlog\include;$(SolutionDir)Walnut\Extern\glew\include;$(SolutionDir)Walnut\Extern\glfw\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
