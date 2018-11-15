@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core.h"
+#include  "Core.h" 
 #include <GL\glew.h>
 #include <GLFW/glfw3.h>
 
@@ -19,6 +19,7 @@ namespace Walnut {
 
 			void Render();
 			void Clear();
+			void SwapBuffer();
 			void Close();
 
 			inline GLFWwindow* GetCurrentWindow() { return mWindow; }

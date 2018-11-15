@@ -1,5 +1,5 @@
-#include "Window.h"
-#include "Log.h"
+#include  "Window.h" 
+#include  "Log.h"" 
 
 Walnut::Test::Window::Window(GLFWwindow* window)
 {
@@ -40,21 +40,18 @@ Walnut::Test::Window* Walnut::Test::Window::WN_CreateWindow(const int width, con
 
 void Walnut::Test::Window::Render()
 {
-	glClear(GL_COLOR_BUFFER_BIT);
 
-	glBegin(GL_TRIANGLES);
-	glVertex2f(-0.5f, -0.5f);
-	glVertex2f(0.5f, -0.5f);
-	glVertex2f(0, 0.5f);
-	glEnd();
 }
 
 void Walnut::Test::Window::Clear()
 {
+	glClear(GL_COLOR_BUFFER_BIT);
+}
 
+void Walnut::Test::Window::SwapBuffer()
+{
 	glfwSwapBuffers(mWindow);
 	glfwPollEvents();
-
 }
 
 void Walnut::Test::Window::Close()

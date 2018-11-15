@@ -1,5 +1,7 @@
 #pragma once
 
+#include <fstream>
+#include <sstream>
 #include "Core.h"
 #include "Window.h"
 #include "Log.h"
@@ -16,6 +18,8 @@ namespace Walnut {
 		virtual ~Application();
 
 		void Run();
+		virtual void Start();
+		virtual void Render();
 	};
 
 	Application* CreateApplication();

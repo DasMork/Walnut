@@ -17,11 +17,16 @@
     <ClInclude Include="src\Walnut\Core.h" />
     <ClInclude Include="src\Walnut\Entrypoint.h" />
     <ClInclude Include="src\Walnut\Window.h" />
+    <ClInclude Include="src\Walnut\Utilities.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Walnut\Log.cpp" />
     <ClCompile Include="src\Walnut\Application.cpp" />
     <ClCompile Include="src\Walnut\Window.cpp" />
+    <ClCompile Include="src\Walnut\Utilities.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shaders\default.shader" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
