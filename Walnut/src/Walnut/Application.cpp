@@ -1,6 +1,5 @@
 #include "Application.h"
 
-
 Walnut::Application::Application()
 	: mRunning(true)
 {
@@ -31,7 +30,11 @@ struct ShaderSources
 };
 
 static ShaderSources ParseShader(const std::string& filepath) {
-	std::fstream stream(filepath);
+
+	std::ifstream stream(filepath + ".glsl");
+
+	if (!stream)
+		WN_CORE_WARNING("The requested shader path is invalid!");
 
 	enum class ShaderType {
 		NONE = -1, VERTEX = 0, FRAGMENT = 1
@@ -40,6 +43,7 @@ static ShaderSources ParseShader(const std::string& filepath) {
 	std::string line;
 	std::stringstream ss[2];
 	ShaderType type = ShaderType::NONE;
+
 	while (getline(stream, line)) {
 		if (line.find("#shader") != std::string::npos) {
 			if (line.find("vertex") != std::string::npos) {
@@ -121,10 +125,7 @@ void Walnut::Application::Start()
 
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
 	glEnableVertexAttribArray(0);
-	ShaderSources ss = ParseShader("src\shaders\default.shader");
-
-	WN_CORE_WARNING(ss.VertexSource);
-	WN_CORE_WARNING(ss.FragmentSource);
+	ShaderSources ss = ParseShader("Walnut/shaders/default");
 	unsigned int shader = CreateShader(ss.VertexSource, ss.FragmentSource);
 	glUseProgram(shader);
 }

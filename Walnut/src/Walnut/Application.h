@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Log.h"
 
+
 namespace Walnut {
 
 	class WALNUT_API Application

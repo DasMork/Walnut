@@ -52,6 +52,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\shaders\default.shader" />
+    <None Include="src\shaders\default.glsl" />
   </ItemGroup>
 </Project>

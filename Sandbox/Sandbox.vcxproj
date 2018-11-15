@@ -92,7 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>WN_PLATFORM_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Walnut\src\;$(SolutionDir)Walnut\Extern\glfw\include;$(SolutionDir)Walnut\Extern\spdlog\include;$(SolutionDir)Walnut\Extern\glew\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Walnut\src\;$(SolutionDir)Walnut\Extern\glfw\include;$(SolutionDir)Walnut\Extern\spdlog\include;$(SolutionDir)Walnut\Extern\mymath\include;$(SolutionDir)Walnut\Extern\glew\include</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -102,7 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>WN_PLATFORM_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Walnut\src\;$(SolutionDir)Walnut\Extern\glfw\include;$(SolutionDir)Walnut\Extern\spdlog\include;$(SolutionDir)Walnut\Extern\glew\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Walnut\src\;$(SolutionDir)Walnut\Extern\glfw\include;$(SolutionDir)Walnut\Extern\spdlog\include;$(SolutionDir)Walnut\Extern\mymath\include;$(SolutionDir)Walnut\Extern\glew\include</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -114,7 +114,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>WN_PLATFORM_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Walnut\src\;$(SolutionDir)Walnut\Extern\glfw\include;$(SolutionDir)Walnut\Extern\spdlog\include;$(SolutionDir)Walnut\Extern\glew\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Walnut\src\;$(SolutionDir)Walnut\Extern\glfw\include;$(SolutionDir)Walnut\Extern\spdlog\include;$(SolutionDir)Walnut\Extern\mymath\include;$(SolutionDir)Walnut\Extern\glew\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -130,7 +130,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>WN_PLATFORM_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Walnut\src\;$(SolutionDir)Walnut\Extern\glfw\include;$(SolutionDir)Walnut\Extern\spdlog\include;$(SolutionDir)Walnut\Extern\glew\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Walnut\src\;$(SolutionDir)Walnut\Extern\glfw\include;$(SolutionDir)Walnut\Extern\spdlog\include;$(SolutionDir)Walnut\Extern\mymath\include;$(SolutionDir)Walnut\Extern\glew\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
