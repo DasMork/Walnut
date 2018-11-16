@@ -27,13 +27,13 @@ Walnut::Test::Window* Walnut::Test::Window::WN_CreateWindow(const int width, con
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
 	{
-		WN_CORE_ERROR("Failed to init GLEW!");
-		WN_CORE_ERROR(glewGetErrorString(err));
+		WN_CORE_ERROR("Failed to init GLEW! Error: {}", glewGetErrorString(err));
 	}
 	else
 	{
 		WN_CORE_LOG("Initialized Glew!");
 	}
+
 
 	return new Window(window);
 }

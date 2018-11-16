@@ -1,12 +1,18 @@
 #include "Application.h"
 
+#ifdef WN_DEBUG
+#define ASSERT(x) if(!(x)) __debugbreak();
+#else
+#define ASSERT(x) x;
+#endif
+#define GLCall(x) glClearErrors(); x; ASSERT(glLogCall(#x, __FILE__, __LINE__));
+
 Walnut::Application::Application()
 	: mRunning(true)
 {
 	mWindow = Walnut::Test::Window::WN_CreateWindow(640, 360, "MyNameIsWalnut");
 	Start();
 }
-
 
 Walnut::Application::~Application()
 {
@@ -28,6 +34,20 @@ struct ShaderSources
 	std::string VertexSource;
 	std::string FragmentSource;
 };
+
+static void glClearErrors() {
+	while (glGetError() != GL_NO_ERROR);
+}
+
+static bool glLogCall(const char* function, const char* file, int line) {
+	while (GLenum error = glGetError()) {
+		WN_CORE_WARNING("OpenGl Error {} in {} on line {}", error, function, line);
+		return false;
+	}
+
+	return true;
+}
+
 
 static ShaderSources ParseShader(const std::string& filepath) {
 
@@ -113,18 +133,29 @@ static unsigned int CreateShader(const std::string& vertexShader, const std::str
 
 void Walnut::Application::Start()
 {
-	float positions[6] = {
+	float positions[8] = {
 		-0.5f, -0.5f,
 		0.5f, -0.5f,
-		0.0f,	0.5f
+		0.5f,  0.5f,
+		-0.5f, 0.5f
+
 	};
-	GLuint buffer;
+
+	unsigned int indices[] = {
+		0,1,2,2,3,0
+	};
+	unsigned int buffer;
 	glGenBuffers(1, &buffer);
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
-
+	glBufferData(GL_ARRAY_BUFFER, 6 * 2 * sizeof(float), positions, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
 	glEnableVertexAttribArray(0);
+
+	unsigned int ibo;
+	glGenBuffers(1, &ibo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+
 	ShaderSources ss = ParseShader("Walnut/shaders/default");
 	unsigned int shader = CreateShader(ss.VertexSource, ss.FragmentSource);
 	glUseProgram(shader);
@@ -132,6 +163,6 @@ void Walnut::Application::Start()
 
 void Walnut::Application::Render()
 {
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 }
 

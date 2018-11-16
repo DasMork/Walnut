@@ -1,8 +1,11 @@
 #include "Log.h" 
 
-std::shared_ptr<spdlog::logger> Walnut::Log::s_CoreLogger;
-std::shared_ptr<spdlog::logger> Walnut::Log::s_ClientLogger;
+namespace Walnut {
 
+	std::shared_ptr<spdlog::logger> Walnut::Log::s_CoreLogger;
+	std::shared_ptr<spdlog::logger> Walnut::Log::s_ClientLogger;
+
+}
 void Walnut::Log::Init()
 {
 	spdlog::set_pattern("%^[%T] %n: %v%$");

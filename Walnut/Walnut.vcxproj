@@ -74,7 +74,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>WN_PLATFORM_WINDOWS;WN_BUILD_DLL;GLEW_STATIC ;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WN_PLATFORM_WINDOWS;WN_BUILD_DLL;GLEW_STATIC;WN_DEBUG</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)Walnut\Extern\spdlog\include;$(SolutionDir)Walnut\Extern\glew\include;$(SolutionDir)Walnut\Extern\mymath\include;$(SolutionDir)Walnut\Extern\glfw\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -82,7 +82,7 @@
       <AdditionalDependencies>glew32s.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy /Y "$(TargetDir)$(ProjectName).dll" "$(SolutionDir)bin\$(Configuration)-$(Platform)\Sandbox\$(ProjectName).dll"</Command>
+      <Command>copy /Y "$(TargetDir)$(ProjectName).dll" "$(SolutionDir)bin\$(Configuration)-$(Platform)\Sandbox\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

@@ -91,7 +91,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>WN_PLATFORM_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WN_PLATFORM_WINDOWS;%(PreprocessorDefinitions);WN_DEBUG</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)\Walnut\src\;$(SolutionDir)Walnut\Extern\glfw\include;$(SolutionDir)Walnut\Extern\spdlog\include;$(SolutionDir)Walnut\Extern\mymath\include;$(SolutionDir)Walnut\Extern\glew\include</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -129,7 +129,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>WN_PLATFORM_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WN_PLATFORM_WINDOWS;%(PreprocessorDefinitions);WN_BUILD_DLL</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)\Walnut\src\;$(SolutionDir)Walnut\Extern\glfw\include;$(SolutionDir)Walnut\Extern\spdlog\include;$(SolutionDir)Walnut\Extern\mymath\include;$(SolutionDir)Walnut\Extern\glew\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
