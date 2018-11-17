@@ -48,7 +48,6 @@ static bool glLogCall(const char* function, const char* file, int line) {
 	return true;
 }
 
-
 static ShaderSources ParseShader(const std::string& filepath) {
 
 	std::ifstream stream(filepath + ".glsl");
@@ -138,7 +137,6 @@ void Walnut::Application::Start()
 		0.5f, -0.5f,
 		0.5f,  0.5f,
 		-0.5f, 0.5f
-
 	};
 
 	unsigned int indices[] = {
@@ -159,6 +157,9 @@ void Walnut::Application::Start()
 	ShaderSources ss = ParseShader("Walnut/shaders/default");
 	unsigned int shader = CreateShader(ss.VertexSource, ss.FragmentSource);
 	glUseProgram(shader);
+
+	GLCall(int location = glGetUniformLocation(shader, "u_Color"));
+	GLCall(glUniform4f(location, 0, 0.5f, 0, 0));
 }
 
 void Walnut::Application::Render()

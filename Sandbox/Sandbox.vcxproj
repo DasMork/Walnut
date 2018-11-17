@@ -130,7 +130,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>WN_PLATFORM_WINDOWS;%(PreprocessorDefinitions);WN_BUILD_DLL</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Walnut\src\;$(SolutionDir)Walnut\Extern\glfw\include;$(SolutionDir)Walnut\Extern\spdlog\include;$(SolutionDir)Walnut\Extern\mymath\include;$(SolutionDir)Walnut\Extern\glew\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Walnut\src\;$(SolutionDir)Walnut\Extern\spdlog\include;$(SolutionDir)Walnut\Extern\glfw\include;$(SolutionDir)Walnut\Extern\glew\include;$(SolutionDir)Walnut\Extern\mymath\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
