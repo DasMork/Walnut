@@ -11,19 +11,31 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Walnut\Shader.h" />
+    <ClInclude Include="src\Walnut\IndexBuffer.h" />
+    <ClInclude Include="src\Walnut\Renderer.h" />
     <ClInclude Include="src\Walnut\Log.h" />
     <ClInclude Include="src\Walnut.h" />
     <ClInclude Include="src\Walnut\Application.h" />
     <ClInclude Include="src\Walnut\Core.h" />
     <ClInclude Include="src\Walnut\Entrypoint.h" />
+    <ClInclude Include="src\Walnut\Rendering.h" />
+    <ClInclude Include="src\Walnut\VertexBufferLayout.h" />
     <ClInclude Include="src\Walnut\Window.h" />
     <ClInclude Include="src\Walnut\Utilities.h" />
+    <ClInclude Include="src\Walnut\VertexBuffer.h" />
+    <ClInclude Include="src\Walnut\VertexArray.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Walnut\Shader.cpp" />
+    <ClCompile Include="src\Walnut\IndexBuffer.cpp" />
+    <ClCompile Include="src\Walnut\Renderer.cpp" />
     <ClCompile Include="src\Walnut\Log.cpp" />
     <ClCompile Include="src\Walnut\Application.cpp" />
     <ClCompile Include="src\Walnut\Window.cpp" />
     <ClCompile Include="src\Walnut\Utilities.cpp" />
+    <ClCompile Include="src\Walnut\VertexBuffer.cpp" />
+    <ClCompile Include="src\Walnut\VertexArray.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\default.glsl" />
