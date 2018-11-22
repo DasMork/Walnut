@@ -29,18 +29,23 @@ void Walnut::Rendering::Shader::Unbind()
 	glUseProgram(0);
 }
 
+void Walnut::Rendering::Shader::SetUniform1i(const std::string & name, int v)
+{
+	GLCall(glUniform1i(GetUniformLocation(name), v));
+}
+
 void Walnut::Rendering::Shader::SetUniform4f(const std::string & name, float v1, float v2, float v3, float v4)
 {
 	GLCall(glUniform4f(GetUniformLocation(name), v1, 2, v3, v4));
 }
 
-unsigned int Walnut::Rendering::Shader::GetUniformLocation(const std::string & name)
+int Walnut::Rendering::Shader::GetUniformLocation(const std::string & name)
 {
 	if (mUniformLocationCache.find(name) != mUniformLocationCache.end()) {
 		return mUniformLocationCache[name];
 	}
 	else {
-		GLCall(unsigned int location = glGetUniformLocation(mRenderID, name.c_str()));
+		GLCall(int location = glGetUniformLocation(mRenderID, name.c_str()));
 		if (location == -1) {
 			WN_CORE_WARNING("Uniform {} does not exist!", name);
 		}

@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
-#include "Rendering.h"
+#include <GL/glew.h>
+#include "Log.h"
 
 namespace Walnut {
 	namespace Rendering {

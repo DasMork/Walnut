@@ -16,7 +16,7 @@ namespace Walnut {
 		{
 		private:
 			unsigned int mRenderID;
-			std::unordered_map<std::string, unsigned int> mUniformLocationCache;
+			std::unordered_map<std::string, int> mUniformLocationCache;
 		public:
 			Shader(const std::string& fielpath);
 			~Shader();
@@ -24,10 +24,12 @@ namespace Walnut {
 			void Bind();
 			void Unbind();
 
+
 			inline unsigned int GetID() { return mRenderID; }
 
+			void SetUniform1i(const std::string & name, int v);
 			void SetUniform4f(const std::string & name, float v1, float v2, float v3, float v4);
-			unsigned int GetUniformLocation(const std::string& name);
+			int GetUniformLocation(const std::string& name);
 
 			ShaderSources ParseShader(const std::string& filepath);
 			unsigned int CompileShader(unsigned int type, const std::string & source);

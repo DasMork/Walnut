@@ -6,7 +6,7 @@
 namespace Walnut {
 	namespace Rendering {
 
-		class VertexArray
+		class WALNUT_API VertexArray
 		{
 
 		private:

@@ -3,6 +3,7 @@
 
 
 Walnut::Rendering::IndexBuffer::IndexBuffer(const void* data, unsigned int count)
+	: mCount(count)
 {
 	glGenBuffers(1, &mRenderID);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mRenderID);

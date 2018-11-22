@@ -1,11 +1,11 @@
 #include "Application.h"
-#include "Rendering.h"
 
 
 Walnut::Application::Application()
 	: mRunning(true)
 {
-	mWindow = Walnut::Test::Window::WN_CreateWindow(640, 360, "MyNameIsWalnut");
+	mWindow = Walnut::Test::Window::WN_CreateWindow(640 * 2, 360 * 2, "MyNameIsWalnut");
+	mRenderer = new Rendering::Renderer();
 	Start();
 }
 
@@ -37,10 +37,10 @@ void Walnut::Application::Start()
 void Walnut::Application::Render()
 {
 	float positions[] = {
-	-0.5f, -0.5f,
-	0.5f, -0.5f,
-	0.5f,  0.5f,
-	-0.5f, 0.5f
+	-1.0f, -1.0f, 0.0f, 0.0f,
+	1.0f, -1.0f,  1.0f, 0.0f,
+	1.0f,  1.0f,  1.0f, 1.0f,
+	-1.0f, 1.0f,  0.0f, 1.0f
 	};
 
 	unsigned int indices[] = {
@@ -51,10 +51,11 @@ void Walnut::Application::Render()
 	Rendering::VertexArray va;
 
 	//---Create Vertex buffer
-	Rendering::VertexBuffer vb(positions, 4 * 2 * sizeof(float));
+	Rendering::VertexBuffer vb(positions, 4 * 4 * sizeof(float));
 
 	//Set Layout
 	Rendering::VertexBufferLayout layout;
+	layout.Push<float>(2);
 	layout.Push<float>(2);
 	va.AddBuffer(vb, layout);
 
@@ -73,9 +74,14 @@ void Walnut::Application::Render()
 	//Load Shader
 	Rendering::Shader shader("Walnut/shaders/default");
 
+	//Create and bind Texture
+	Rendering::Texture texture("Walnut/images/inside.png");
+	texture.Bind();
+
 	//Set Uniform
+	shader.SetUniform1i("u_Texture", 0);
 	shader.SetUniform4f("u_Color", 0, 0.5f, 0, 1);
 
 	//Draw call
-	GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+	mRenderer->Draw(va, ib, shader);
 }

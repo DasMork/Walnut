@@ -8,6 +8,7 @@ namespace Walnut {
 		{
 		private:
 			unsigned int mRenderID;
+			unsigned int mCount;
 
 		public:
 			IndexBuffer(const void* data, unsigned int count);
@@ -17,6 +18,7 @@ namespace Walnut {
 			void Unbind()const;
 
 			inline unsigned int GetRenderID() const { return mRenderID; }
+			inline unsigned int GetCount() const { return mCount; }
 		};
 	}
 }

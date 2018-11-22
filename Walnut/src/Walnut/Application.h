@@ -1,10 +1,9 @@
 #pragma once
 
-#include <fstream>
-#include <sstream>
 #include "Core.h"
-#include "Window.h"
 #include "Log.h"
+#include "Window.h"
+#include "Rendering.h"
 
 
 namespace Walnut {
@@ -14,6 +13,7 @@ namespace Walnut {
 	private:
 		bool mRunning;
 		Test::Window * mWindow;
+		Rendering::Renderer* mRenderer;
 	public:
 		Application();
 		virtual ~Application();

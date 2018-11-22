@@ -1,10 +1,12 @@
 #pragma once
 #include "GL/glew.h"
 #include "Log.h"
+#include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "Shader.h"
-#include "VertexArray.h"
+#include "Renderer.h"
+#include "Texture.h"
 
 #ifdef WN_DEBUG
 #define ASSERT(x) if(!(x)) __debugbreak();

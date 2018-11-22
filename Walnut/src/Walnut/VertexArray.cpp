@@ -34,7 +34,7 @@ void Walnut::Rendering::VertexArray::AddBuffer(const VertexBuffer & vb, const Ve
 		const auto& element = elements[i];
 
 		glEnableVertexAttribArray(i);
-		glVertexAttribPointer(0, element.count, element.type, element.normalized, layout.GetStride(), (void*)offset);
+		glVertexAttribPointer(i, element.count, element.type, element.normalized, layout.GetStride(), (void*)offset);
 		offset += element.count * VertexBufferElement::GetSizeOfType(element.type);
 
 	}

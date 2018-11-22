@@ -34,7 +34,8 @@ Walnut::Test::Window* Walnut::Test::Window::WN_CreateWindow(const int width, con
 		WN_CORE_LOG("Initialized Glew!");
 	}
 
-
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
 	return new Window(window);
 }
 
