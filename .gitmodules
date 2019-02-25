@@ -1,3 +1,0 @@
-[submodule "Walnut/Extern/spdlog"]
-	path = Walnut/Extern/spdlog
-	url = https://github.com/gabime/spdlog.git

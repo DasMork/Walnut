@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Walnut">
+      <UniqueIdentifier>{C038E8D9-ACDA-12B0-9595-260481D69900}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Walnut.h" />
+    <ClInclude Include="src\Walnut\Application.h">
+      <Filter>Walnut</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Walnut\Core.h">
+      <Filter>Walnut</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Walnut\Entrypoint.h">
+      <Filter>Walnut</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Walnut\Log.h">
+      <Filter>Walnut</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Walnut\Application.cpp">
+      <Filter>Walnut</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Walnut\Log.cpp">
+      <Filter>Walnut</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
