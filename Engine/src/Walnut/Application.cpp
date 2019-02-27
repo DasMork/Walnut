@@ -1,10 +1,13 @@
 #include "wnpch.h"
 
 #include "Application.h"
-#include "Events/ApplicationEvent.h"
+
+#define BIND_EVENT_FN(x) std::bind(&::x, this, std::placeholders::_1)
 
 Walnut::Application::Application()
 {
+	mWindow = std::unique_ptr<Window>(Window::Create());
+	mWindow->SetEventCallback(BIND_EVENT_FN(Walnut::Application::OnEvent));
 }
 
 
@@ -14,12 +17,23 @@ Walnut::Application::~Application()
 
 void Walnut::Application::Run()
 {
-	WindowResizeEvent e(1280, 720);
-	WN_LOG(e);
-	for (;;)
+	while (mRunning)
 	{
+		mWindow->OnUpdate();
 	}
-	WindowCloseEvent c;
-	WN_LOG(c);
+}
+
+void Walnut::Application::OnEvent(Event & event)
+{
+	EventDispatcher dispatcher(event);
+	dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Walnut::Application::OnWindowClose));
+
+	WN_CORE_LOG(event);
+}
+
+bool Walnut::Application::OnWindowClose(WindowCloseEvent & e)
+{
+	mRunning = false;
+	return true;
 }
 

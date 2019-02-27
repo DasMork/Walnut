@@ -10,6 +10,11 @@ workspace "Walnut-Engine"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+IncludeDir = {}
+IncludeDir["GLFW"] = "Engine/Extern/GLFW/include"
+
+include "Engine/Extern/GLFW"
+
 project "Engine"
 	location "Engine"
 	kind "SharedLib"
@@ -30,7 +35,14 @@ project "Engine"
 	includedirs
 	{
 		"%{prj.name}/src",
-		"%{prj.name}/Extern/spdlog/include"
+		"%{prj.name}/Extern/spdlog/include",
+		"%{IncludeDir.GLFW}"
+	}
+
+	links
+	{
+		"GLFW",
+		"opengl32.lib"
 	}
 
 	filter "system:windows"
@@ -51,6 +63,7 @@ project "Engine"
 
 	filter "configurations:Debug"
 		defines "WN_DEBUG"
+		defines "WN_ENABLE_ASSERTS"
 		symbols "On"
 
 	filter "configurations:Release"
@@ -98,6 +111,7 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines "WN_DEBUG"
+		defines "WN_ENABLE_ASSERTS"
 		symbols "On"
 
 	filter "configurations:Release"

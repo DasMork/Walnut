@@ -63,8 +63,8 @@ namespace Walnut
 		{
 			if (mEvent.GetEventType() == T::GetStaticType())
 			{
-				mEvent.mHandled = func(*(T*)&mEvent)
-					return true;
+				mEvent.mHandled = func(*(T*)&mEvent);
+				return true;
 			}
 			return false;
 		}

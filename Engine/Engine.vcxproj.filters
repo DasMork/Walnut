@@ -7,6 +7,12 @@
     <Filter Include="Walnut\Events">
       <UniqueIdentifier>{A48C4E08-104D-CA3E-D987-13BC45070F1B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Walnut\Platform">
+      <UniqueIdentifier>{144D4272-80D8-AF36-89E9-322BF5F30B37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Walnut\Platform\Windows">
+      <UniqueIdentifier>{4ECB05A2-BA02-4E39-C30C-B25C2FC37432}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Walnut.h" />
@@ -34,6 +40,12 @@
     <ClInclude Include="src\Walnut\Log.h">
       <Filter>Walnut</Filter>
     </ClInclude>
+    <ClInclude Include="src\Walnut\Platform\Windows\GLWindow.h">
+      <Filter>Walnut\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Walnut\Window.h">
+      <Filter>Walnut</Filter>
+    </ClInclude>
     <ClInclude Include="src\wnpch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -42,6 +54,9 @@
     </ClCompile>
     <ClCompile Include="src\Walnut\Log.cpp">
       <Filter>Walnut</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Walnut\Platform\Windows\GLWindow.cpp">
+      <Filter>Walnut\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\wnpch.cpp" />
   </ItemGroup>
