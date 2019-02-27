@@ -12,8 +12,10 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
 IncludeDir["GLFW"] = "Engine/Extern/GLFW/include"
+IncludeDir["GLAD"] = "Engine/Extern/GLAD/include"
 
 include "Engine/Extern/GLFW"
+include "Engine/Extern/GLAD"
 
 project "Engine"
 	location "Engine"
@@ -36,12 +38,14 @@ project "Engine"
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/Extern/spdlog/include",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.GLAD}"
 	}
 
 	links
 	{
 		"GLFW",
+		"GLAD",
 		"opengl32.lib"
 	}
 
@@ -53,7 +57,8 @@ project "Engine"
 		defines
 		{
 			"WN_PLATFORM_WINDOWS",
-			"WN_BUILD_DLL"
+			"WN_BUILD_DLL",
+			"GLFW_INCLUDE_NONE"
 		}
 
 		postbuildcommands
