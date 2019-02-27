@@ -1,8 +1,5 @@
 #pragma once
 
-#include <string>
-#include <sstream>
-#include <functional>
 #include "../Core.h";
 
 namespace Walnut

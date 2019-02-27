@@ -18,6 +18,9 @@ project "Engine"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+	pchheader "wnpch.h"
+	pchsource "Engine/src/wnpch.cpp"
+
 	files
 	{
 		"%{prj.name}/src/**.h",
@@ -26,7 +29,7 @@ project "Engine"
 
 	includedirs
 	{
-		"%{prj.name}/src"
+		"%{prj.name}/src",
 		"%{prj.name}/Extern/spdlog/include"
 	}
 
