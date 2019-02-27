@@ -19,6 +19,10 @@
     <ClInclude Include="src\Walnut\Log.h">
       <Filter>Walnut</Filter>
     </ClInclude>
+    <ClInclude Include="src\Walnut\Events\Event.h" />
+    <ClInclude Include="src\Walnut\Events\KeyEvent.h" />
+    <ClInclude Include="src\Walnut\Events\MouseEvent.h" />
+    <ClInclude Include="src\Walnut\Events\ApplicationEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Walnut\Application.cpp">

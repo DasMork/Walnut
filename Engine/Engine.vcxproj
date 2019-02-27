@@ -143,10 +143,14 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Walnut\Events\ApplicationEvent.h" />
+    <ClInclude Include="src\Walnut\Events\Event.h" />
     <ClInclude Include="src\Walnut.h" />
     <ClInclude Include="src\Walnut\Application.h" />
     <ClInclude Include="src\Walnut\Core.h" />
     <ClInclude Include="src\Walnut\Entrypoint.h" />
+    <ClInclude Include="src\Walnut\Events\KeyEvent.h" />
+    <ClInclude Include="src\Walnut\Events\MouseEvent.h" />
     <ClInclude Include="src\Walnut\Log.h" />
   </ItemGroup>
   <ItemGroup>

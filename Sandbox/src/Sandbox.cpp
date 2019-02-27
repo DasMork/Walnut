@@ -2,7 +2,6 @@
 
 class Sandbox : public Walnut::Application
 {
-
 public:
 	Sandbox()
 	{
@@ -15,10 +14,7 @@ public:
 	}
 };
 
-
 Walnut::Application* Walnut::CreateApplication()
 {
 	return new Sandbox();
 }
-
-
