@@ -37,6 +37,12 @@
     <ClInclude Include="src\Walnut\Events\MouseEvent.h">
       <Filter>Walnut\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Walnut\Layer.h">
+      <Filter>Walnut</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Walnut\LayerStack.h">
+      <Filter>Walnut</Filter>
+    </ClInclude>
     <ClInclude Include="src\Walnut\Log.h">
       <Filter>Walnut</Filter>
     </ClInclude>
@@ -50,6 +56,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Walnut\Application.cpp">
+      <Filter>Walnut</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Walnut\Layer.cpp">
+      <Filter>Walnut</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Walnut\LayerStack.cpp">
       <Filter>Walnut</Filter>
     </ClCompile>
     <ClCompile Include="src\Walnut\Log.cpp">
