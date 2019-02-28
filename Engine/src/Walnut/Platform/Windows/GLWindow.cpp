@@ -32,21 +32,18 @@ Walnut::GLWindow::~GLWindow()
 
 void Walnut::GLWindow::OnUpdate()
 {
-	glClearColor(0.2f, 0, 0.1f, 1);
-	glClear(GL_COLOR_BUFFER_BIT);
-
 	glfwPollEvents();
 	glfwSwapBuffers(mWindow);
 }
 
 unsigned int Walnut::GLWindow::GetWidth() const
 {
-	return 0;
+	return mData.Width;
 }
 
 unsigned int Walnut::GLWindow::GetHeight() const
 {
-	return 0;
+	return mData.Height;
 }
 
 void Walnut::GLWindow::SetVSync(bool enabled)
@@ -135,6 +132,13 @@ void Walnut::GLWindow::Init(const WindowProps & props)
 			break;
 		}
 		}
+	});
+
+	glfwSetCharCallback(mWindow, [](GLFWwindow* window, unsigned int keycode)
+	{
+		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+		KeyTypedEvent event(keycode);
+		data.EventCallback(event);
 	});
 
 	glfwSetMouseButtonCallback(mWindow, [](GLFWwindow* window, int button, int action, int mods)

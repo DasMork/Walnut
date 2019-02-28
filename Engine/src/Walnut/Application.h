@@ -17,12 +17,17 @@ namespace Walnut
 
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* overlay);
+		inline Window& GetWindow() { return *mWindow; };
+
+		inline static Application& Get() { return *sInstance; }
 	private:
 		bool mRunning = true;
 		bool OnWindowClose(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> mWindow;
 		LayerStack mLayerStack;
+
+		static Application* sInstance;
 	};
 
 	Application* CreateApplication();

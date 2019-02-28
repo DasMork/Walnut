@@ -4,3 +4,6 @@
 [submodule "Engine/Extern/GLFW"]
 	path = Engine/Extern/GLFW
 	url = https://github.com/DasMork/glfw
+[submodule "Engine/Extern/ImGui"]
+	path = Engine/Extern/ImGui
+	url = https://github.com/DasMork/imgui

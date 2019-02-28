@@ -1,13 +1,16 @@
 #include "wnpch.h"
 
 #include "Application.h"
+#include "glad\glad.h"
 
-#define BIND_EVENT_FN(x) std::bind(&::x, this, std::placeholders::_1)
+Walnut::Application* Walnut::Application::sInstance = nullptr;
 
 Walnut::Application::Application()
 {
+	WN_CORE_ASSERT(!Application::sInstance, "Application already exists!");
+	Application::sInstance = this;
 	mWindow = std::unique_ptr<Window>(Window::Create());
-	mWindow->SetEventCallback(BIND_EVENT_FN(Walnut::Application::OnEvent));
+	mWindow->SetEventCallback(WN_BIND_EVENT_FN(Walnut::Application::OnEvent));
 }
 
 
@@ -19,6 +22,9 @@ void Walnut::Application::Run()
 {
 	while (mRunning)
 	{
+		glClearColor(0.2f, 0, 0.1f, 1);
+		glClear(GL_COLOR_BUFFER_BIT);
+
 		for (Layer* layer : mLayerStack)
 			layer->OnUpdate();
 
@@ -29,7 +35,7 @@ void Walnut::Application::Run()
 void Walnut::Application::OnEvent(Event & event)
 {
 	EventDispatcher dispatcher(event);
-	dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Walnut::Application::OnWindowClose));
+	dispatcher.Dispatch<WindowCloseEvent>(WN_BIND_EVENT_FN(Walnut::Application::OnWindowClose));
 
 	WN_CORE_LOG(event);
 
@@ -44,11 +50,13 @@ void Walnut::Application::OnEvent(Event & event)
 void Walnut::Application::PushLayer(Layer * layer)
 {
 	mLayerStack.PushLayer(layer);
+	layer->OnAttach();
 }
 
 void Walnut::Application::PushOverlay(Layer * overlay)
 {
 	mLayerStack.PushOverlay(overlay);
+	overlay->OnAttach();
 }
 
 bool Walnut::Application::OnWindowClose(WindowCloseEvent & e)
