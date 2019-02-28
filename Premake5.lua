@@ -17,9 +17,12 @@ IncludeDir["ImGui"] = "Engine/Extern/ImGui"
 
 startproject "Sandbox"
 
-include "Engine/Extern/GLFW"
-include "Engine/Extern/GLAD"
-include "Engine/Extern/ImGui"
+group "Dependencies"
+	include "Engine/Extern/GLFW"
+	include "Engine/Extern/GLAD"
+	include "Engine/Extern/ImGui"
+
+group ""
 
 
 project "Engine"
@@ -70,7 +73,7 @@ project "Engine"
 
 		postbuildcommands
 		{
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+			("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
 		}
 
 	filter "configurations:Debug"
