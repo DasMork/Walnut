@@ -158,11 +158,15 @@
     <ClInclude Include="src\Walnut\Events\KeyEvent.h" />
     <ClInclude Include="src\Walnut\Events\MouseEvent.h" />
     <ClInclude Include="src\Walnut\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Walnut\Input.h" />
+    <ClInclude Include="src\Walnut\KeyCodes.h" />
     <ClInclude Include="src\Walnut\Layer.h" />
     <ClInclude Include="src\Walnut\LayerStack.h" />
     <ClInclude Include="src\Walnut\Log.h" />
+    <ClInclude Include="src\Walnut\MouseButtonCodes.h" />
     <ClInclude Include="src\Walnut\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
     <ClInclude Include="src\Walnut\Platform\Windows\GLWindow.h" />
+    <ClInclude Include="src\Walnut\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Walnut\Window.h" />
     <ClInclude Include="src\wnpch.h" />
   </ItemGroup>
@@ -174,6 +178,7 @@
     <ClCompile Include="src\Walnut\Log.cpp" />
     <ClCompile Include="src\Walnut\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
     <ClCompile Include="src\Walnut\Platform\Windows\GLWindow.cpp" />
+    <ClCompile Include="src\Walnut\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\wnpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

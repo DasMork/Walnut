@@ -1,6 +1,7 @@
 #include "wnpch.h"
 #include "ImGuiLayer.h"
 
+#include "Walnut/KeyCodes.h"
 #include "imgui.h"
 #include "Walnut/Application.h"
 #include "Walnut/ImGui/ImGuiLayer.h"
@@ -30,27 +31,27 @@ void Walnut::ImGuiLayer::OnAttach()
 
 	// TODO Redo!
 	//Keyboard mapping. ImGui will use those indices to peek into the io.KeysDown[] array.
-	io.KeyMap[ImGuiKey_Tab] = GLFW_KEY_TAB;
-	io.KeyMap[ImGuiKey_LeftArrow] = GLFW_KEY_LEFT;
-	io.KeyMap[ImGuiKey_RightArrow] = GLFW_KEY_RIGHT;
-	io.KeyMap[ImGuiKey_UpArrow] = GLFW_KEY_UP;
-	io.KeyMap[ImGuiKey_DownArrow] = GLFW_KEY_DOWN;
-	io.KeyMap[ImGuiKey_PageUp] = GLFW_KEY_PAGE_UP;
-	io.KeyMap[ImGuiKey_PageDown] = GLFW_KEY_PAGE_DOWN;
-	io.KeyMap[ImGuiKey_Home] = GLFW_KEY_HOME;
-	io.KeyMap[ImGuiKey_End] = GLFW_KEY_END;
-	io.KeyMap[ImGuiKey_Insert] = GLFW_KEY_INSERT;
-	io.KeyMap[ImGuiKey_Delete] = GLFW_KEY_DELETE;
-	io.KeyMap[ImGuiKey_Backspace] = GLFW_KEY_BACKSPACE;
-	io.KeyMap[ImGuiKey_Space] = GLFW_KEY_SPACE;
-	io.KeyMap[ImGuiKey_Enter] = GLFW_KEY_ENTER;
-	io.KeyMap[ImGuiKey_Escape] = GLFW_KEY_ESCAPE;
-	io.KeyMap[ImGuiKey_A] = GLFW_KEY_A;
-	io.KeyMap[ImGuiKey_C] = GLFW_KEY_C;
-	io.KeyMap[ImGuiKey_V] = GLFW_KEY_V;
-	io.KeyMap[ImGuiKey_X] = GLFW_KEY_X;
-	io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
-	io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
+	io.KeyMap[ImGuiKey_Tab] = WN_KEY_TAB;
+	io.KeyMap[ImGuiKey_LeftArrow] = WN_KEY_LEFT;
+	io.KeyMap[ImGuiKey_RightArrow] = WN_KEY_RIGHT;
+	io.KeyMap[ImGuiKey_UpArrow] = WN_KEY_UP;
+	io.KeyMap[ImGuiKey_DownArrow] = WN_KEY_DOWN;
+	io.KeyMap[ImGuiKey_PageUp] = WN_KEY_PAGE_UP;
+	io.KeyMap[ImGuiKey_PageDown] = WN_KEY_PAGE_DOWN;
+	io.KeyMap[ImGuiKey_Home] = WN_KEY_HOME;
+	io.KeyMap[ImGuiKey_End] = WN_KEY_END;
+	io.KeyMap[ImGuiKey_Insert] = WN_KEY_INSERT;
+	io.KeyMap[ImGuiKey_Delete] = WN_KEY_DELETE;
+	io.KeyMap[ImGuiKey_Backspace] = WN_KEY_BACKSPACE;
+	io.KeyMap[ImGuiKey_Space] = WN_KEY_SPACE;
+	io.KeyMap[ImGuiKey_Enter] = WN_KEY_ENTER;
+	io.KeyMap[ImGuiKey_Escape] = WN_KEY_ESCAPE;
+	io.KeyMap[ImGuiKey_A] = WN_KEY_A;
+	io.KeyMap[ImGuiKey_C] = WN_KEY_C;
+	io.KeyMap[ImGuiKey_V] = WN_KEY_V;
+	io.KeyMap[ImGuiKey_X] = WN_KEY_X;
+	io.KeyMap[ImGuiKey_Y] = WN_KEY_Y;
+	io.KeyMap[ImGuiKey_Z] = WN_KEY_Z;
 
 	io.SetClipboardTextFn = [](void* userdata, const char* text)
 	{
@@ -143,10 +144,10 @@ bool Walnut::ImGuiLayer::OnKeyPressed(KeyPressedEvent & event)
 	ImGuiIO& io = ImGui::GetIO();
 	io.KeysDown[event.GetKeyCode()] = true;
 
-	io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
-	io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
-	io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
-	io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
+	io.KeyCtrl = io.KeysDown[WN_KEY_LEFT_CONTROL] || io.KeysDown[WN_KEY_RIGHT_CONTROL];
+	io.KeyShift = io.KeysDown[WN_KEY_LEFT_SHIFT] || io.KeysDown[WN_KEY_RIGHT_SHIFT];
+	io.KeyAlt = io.KeysDown[WN_KEY_LEFT_ALT] || io.KeysDown[WN_KEY_RIGHT_ALT];
+	io.KeySuper = io.KeysDown[WN_KEY_LEFT_SUPER] || io.KeysDown[WN_KEY_RIGHT_SUPER];
 	return false;
 }
 

@@ -3,6 +3,8 @@
 #include "Application.h"
 #include "glad\glad.h"
 
+#include "Input.h"
+
 Walnut::Application* Walnut::Application::sInstance = nullptr;
 
 Walnut::Application::Application()
@@ -28,6 +30,9 @@ void Walnut::Application::Run()
 		for (Layer* layer : mLayerStack)
 			layer->OnUpdate();
 
+		if (Input::GetMouseButton(0))
+			WN_CORE_LOG("Pressed Mouse Button 0");
+
 		mWindow->OnUpdate();
 	}
 }
@@ -36,8 +41,6 @@ void Walnut::Application::OnEvent(Event & event)
 {
 	EventDispatcher dispatcher(event);
 	dispatcher.Dispatch<WindowCloseEvent>(WN_BIND_EVENT_FN(Walnut::Application::OnWindowClose));
-
-	WN_CORE_LOG(event);
 
 	for (auto it = mLayerStack.end(); it != mLayerStack.begin();)
 	{
