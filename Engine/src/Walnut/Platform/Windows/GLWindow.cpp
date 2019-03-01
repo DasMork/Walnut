@@ -63,7 +63,7 @@ bool Walnut::GLWindow::IsVSync() const
 
 void Walnut::GLWindow::Init(const WindowProps & props)
 {
-	mData.Title = props.Title;
+	mData.Title = props.Title + " (OpenGL)";
 	mData.Width = props.Width;
 	mData.Height = props.Height;
 

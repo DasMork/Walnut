@@ -4,7 +4,7 @@
 
 #include <GLFW\glfw3.h>
 
-Walnut::Input* Walnut::Input::sInstance = new Walnut::WindowsInput();
+Walnut::Input* Walnut::Input::sInstance = new WindowsInput();
 
 bool Walnut::WindowsInput::GetKeyImpl(int keycode)
 {

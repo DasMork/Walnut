@@ -7,3 +7,6 @@
 [submodule "Engine/Extern/ImGui"]
 	path = Engine/Extern/ImGui
 	url = https://github.com/DasMork/imgui
+[submodule "Engine/Extern/glm"]
+	path = Engine/Extern/glm
+	url = https://github.com/g-truc/glm

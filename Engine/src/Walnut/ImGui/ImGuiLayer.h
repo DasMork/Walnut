@@ -12,11 +12,11 @@ namespace Walnut
 		ImGuiLayer();
 		~ImGuiLayer();
 	private:
-		void OnAttach();
-		void OnDetach();
+		void OnAttach() override;
+		void OnDetach() override;
 
-		void OnUpdate();
-		void OnEvent(Event& event);
+		void OnUpdate() override;
+		void OnEvent(Event& event) override;
 
 		bool OnMouseButtonPressed(MouseButtonPressedEvent& event);
 		bool OnMouseButtonReleased(MouseButtonReleasedEvent& event);

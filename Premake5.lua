@@ -14,6 +14,7 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "Engine/Extern/GLFW/include"
 IncludeDir["GLAD"] = "Engine/Extern/GLAD/include"
 IncludeDir["ImGui"] = "Engine/Extern/ImGui"
+IncludeDir["glm"] = "Engine/Extern/glm"
 
 startproject "Sandbox"
 
@@ -49,7 +50,8 @@ project "Engine"
 		"%{prj.name}/Extern/spdlog/include",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.GLAD}",
-		"%{IncludeDir.ImGui}"
+		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.glm}"
 	}
 
 	links
@@ -110,6 +112,7 @@ project "Sandbox"
 	includedirs
 	{
 		"Engine/Extern/spdlog/include",
+		"%{IncludeDir.glm}",
 		"Engine/src"
 	}
 
