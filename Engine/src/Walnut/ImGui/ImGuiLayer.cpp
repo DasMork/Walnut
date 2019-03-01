@@ -6,6 +6,7 @@
 #include "Walnut/Application.h"
 #include "Walnut/ImGui/ImGuiLayer.h"
 #include "Walnut\Platform\OpenGL\ImGuiOpenGLRenderer.h"
+#include "Walnut/ImGui/ImGuiEditor.h"
 
 //TODO REDO!
 #include <GLFW\glfw3.h>
@@ -84,7 +85,9 @@ void Walnut::ImGuiLayer::OnUpdate()
 
 
 	static bool show = true;
-	ImGui::ShowDemoWindow(&show);
+	//ImGui::ShowDemoWindow(&show);
+	ImGuiEditor::ShowEditor(&show);
+
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
