@@ -3,4 +3,14 @@
 
 bin/
 
+!Extern/bin
+
 bin-int/
+
+*.vcxproj
+
+*.filters
+
+*.user
+
+*.sln
