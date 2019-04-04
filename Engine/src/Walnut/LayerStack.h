@@ -23,6 +23,6 @@ namespace Walnut
 
 	private:
 		std::vector<Layer*> mLayers;
-		std::vector<Layer*>::iterator mLayerInsert;
+		unsigned int mLayerInsertIndex;
 	};
 }

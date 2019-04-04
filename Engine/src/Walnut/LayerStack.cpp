@@ -3,7 +3,6 @@
 
 Walnut::LayerStack::LayerStack()
 {
-	mLayerInsert = mLayers.begin();
 }
 
 Walnut::LayerStack::~LayerStack()
@@ -14,7 +13,8 @@ Walnut::LayerStack::~LayerStack()
 
 void Walnut::LayerStack::PushLayer(Layer * layer)
 {
-	mLayerInsert = mLayers.emplace(mLayerInsert, layer);
+	mLayers.emplace(mLayers.begin() + mLayerInsertIndex, layer);
+	mLayerInsertIndex++;
 }
 
 void Walnut::LayerStack::PushOverlay(Layer * overlay)
@@ -28,7 +28,7 @@ void Walnut::LayerStack::PopLayer(Layer * layer)
 	if (it != mLayers.end())
 	{
 		mLayers.erase(it);
-		mLayerInsert--;
+		mLayerInsertIndex--;
 	}
 }
 

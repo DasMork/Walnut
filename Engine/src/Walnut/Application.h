@@ -3,6 +3,7 @@
 #include "Window.h"
 #include "Events/ApplicationEvent.h"
 #include "LayerStack.h"
+#include "ImGui/ImGuiLayer.h"
 
 namespace Walnut
 {
@@ -25,6 +26,7 @@ namespace Walnut
 		bool OnWindowClose(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> mWindow;
+		ImGuiLayer* mImGuiLayer;
 		LayerStack mLayerStack;
 
 		static Application* sInstance;

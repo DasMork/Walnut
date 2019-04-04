@@ -1,5 +1,6 @@
 #pragma once
 #include "Walnut/Layer.h"
+
 #include "Walnut/Events/ApplicationEvent.h"
 #include "Walnut/Events/KeyEvent.h"
 #include "Walnut/Events/MouseEvent.h"
@@ -11,24 +12,13 @@ namespace Walnut
 	public:
 		ImGuiLayer();
 		~ImGuiLayer();
-	private:
-		void OnAttach() override;
-		void OnDetach() override;
 
-		void OnUpdate() override;
-		void OnEvent(Event& event) override;
+		virtual void OnAttach() override;
+		virtual void OnDetach() override;
+		virtual void OnImGuiRender() override;
 
-		bool OnMouseButtonPressed(MouseButtonPressedEvent& event);
-		bool OnMouseButtonReleased(MouseButtonReleasedEvent& event);
-		bool OnMouseMoved(MouseMovedEvent& event);
-		bool OnMouseScrolled(MouseScrolledEvent& event);
-
-		bool OnKeyPressed(KeyPressedEvent& event);
-		bool OnKeyReleased(KeyReleasedEvent& event);
-		bool OnKeyTyped(KeyTypedEvent& event);
-
-		bool OnWindowResize(WindowResizeEvent& event);
-
+		void Begin();
+		void End();
 	private:
 		float mTime = 0.0f;
 	};

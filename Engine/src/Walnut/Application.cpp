@@ -13,6 +13,9 @@ Walnut::Application::Application()
 	Application::sInstance = this;
 	mWindow = std::unique_ptr<Window>(Window::Create());
 	mWindow->SetEventCallback(WN_BIND_EVENT_FN(Walnut::Application::OnEvent));
+
+	mImGuiLayer = new ImGuiLayer();
+	PushOverlay(mImGuiLayer);
 }
 
 
@@ -30,8 +33,11 @@ void Walnut::Application::Run()
 		for (Layer* layer : mLayerStack)
 			layer->OnUpdate();
 
-		if (Input::GetMouseButton(0))
-			WN_CORE_LOG("Pressed Mouse Button 0");
+		mImGuiLayer->Begin();
+		for (Layer* layer : mLayerStack)
+			layer->OnImGuiRender();
+		mImGuiLayer->End();
+
 
 		mWindow->OnUpdate();
 	}
