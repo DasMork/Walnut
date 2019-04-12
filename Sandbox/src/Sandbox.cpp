@@ -12,7 +12,9 @@ public:
 
 	void OnImGuiRender() override
 	{
-
+		ImGui::Begin("Test");
+		ImGui::TextUnformatted("Hello World");
+		ImGui::End();
 	}
 };
 

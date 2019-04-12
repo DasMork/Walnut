@@ -70,7 +70,8 @@ project "Engine"
 		{
 			"WN_PLATFORM_WINDOWS",
 			"WN_BUILD_DLL",
-			"GLFW_INCLUDE_NONE"
+			"GLFW_INCLUDE_NONE",
+			"IMGUI_API=__declspec(dllexport)"
 		}
 
 		postbuildcommands
@@ -128,7 +129,8 @@ project "Sandbox"
 
 		defines
 		{
-			"WN_PLATFORM_WINDOWS"
+			"WN_PLATFORM_WINDOWS",
+			"IMGUI_API=__declspec(dllimport)"
 		}
 
 	filter "configurations:Debug"
@@ -138,11 +140,11 @@ project "Sandbox"
 		symbols "On"
 
 	filter "configurations:Release"
-		defines "WN_RELEASE"
+		defines "WN_RELEASE"		
 		runtime "Release"
 		optimize "On"
 
 	filter "configurations:Dist"
-		defines "WN_DIST"
+		defines "WN_DIST"		
 		runtime "Release"
 		optimize "On"
