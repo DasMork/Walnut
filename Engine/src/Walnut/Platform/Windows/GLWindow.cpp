@@ -83,7 +83,7 @@ void Walnut::GLWindow::Init(const WindowProps & props)
 	int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 	WN_CORE_ASSERT(status, "Failed to initalize Glad!");
 	glfwSetWindowUserPointer(mWindow, &mData);
-	SetVSync(true);
+	SetVSync(false);
 
 	//Set GLFW Callbacks
 	glfwSetErrorCallback(GLFWErrorCallback);
