@@ -1,7 +1,16 @@
-# Directories
-.vs/
+
+\.vs/
+
 bin/
+
+!Extern/bin
+
 bin-int/
 
-# Files
+*.vcxproj
+
+*.filters
+
 *.user
+
+*.sln
