@@ -1,6 +1,5 @@
 #include <Walnut.h>
 
-#include "ImGui/imgui.h"
 class SandboxLayer : public Walnut::Layer
 {
 public:
