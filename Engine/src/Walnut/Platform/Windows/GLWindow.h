@@ -2,6 +2,7 @@
 #include "Walnut/Window.h"
 
 #include <GLFW/glfw3.h>
+#include "Walnut/Graphics/Context.h"
 
 namespace Walnut
 {
@@ -31,6 +32,7 @@ namespace Walnut
 
 	private:
 		GLFWwindow * mWindow;
+		Context* mContext;
 
 		struct WindowData
 		{

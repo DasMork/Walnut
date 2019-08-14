@@ -5,7 +5,7 @@
 #include "Walnut/Events/ApplicationEvent.h"
 #include "Walnut/Events/KeyEvent.h"
 #include "Walnut/Events/MouseEvent.h"
-#include "glad/glad.h"
+#include "Walnut/Graphics/OpenGLContext.h"
 
 static bool sGLFWInitialized;
 
@@ -33,7 +33,7 @@ Walnut::GLWindow::~GLWindow()
 void Walnut::GLWindow::OnUpdate()
 {
 	glfwPollEvents();
-	glfwSwapBuffers(mWindow);
+	mContext->SwapBuffers();
 }
 
 unsigned int Walnut::GLWindow::GetWidth() const
@@ -67,6 +67,7 @@ void Walnut::GLWindow::Init(const WindowProps & props)
 	mData.Width = props.Width;
 	mData.Height = props.Height;
 
+
 	WN_CORE_LOG("Creating Window '{0}' ({1}, {2})", props.Title, props.Width, props.Height);
 
 	if (!sGLFWInitialized)
@@ -78,10 +79,9 @@ void Walnut::GLWindow::Init(const WindowProps & props)
 	}
 
 	mWindow = glfwCreateWindow((int)mData.Width, (int)mData.Height, mData.Title.c_str(), nullptr, nullptr);
-	glfwMakeContextCurrent(mWindow);
+	mContext = new OpenGLContext(mWindow);
+	mContext->Init();
 
-	int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-	WN_CORE_ASSERT(status, "Failed to initalize Glad!");
 	glfwSetWindowUserPointer(mWindow, &mData);
 	SetVSync(true);
 
