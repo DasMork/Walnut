@@ -1,7 +1,8 @@
 #include "wnpch.h"
 
 #include "Application.h"
-#include "glad\glad.h"
+#include "Graphics/RenderCommand.h"
+#include "Graphics/Renderer.h"
 
 Walnut::Application* Walnut::Application::sInstance = nullptr;
 
@@ -44,40 +45,7 @@ Walnut::Application::Application()
 	indexBuffer.reset(IndexBuffer::Create(indices, 6));
 	mVertexArray->SetIndexBuffer(indexBuffer);
 
-	std::string vertexSrc = R"(
-		#version 330 core
-		
-		layout(location = 0) in vec3 aPosition;
-		layout(location = 1) in vec4 aColor;
-		
-		out vec3 vPosition;
-		out vec4 vColor;
-
-		void main()
-		{
-			vPosition = aPosition;
-			vColor = aColor;
-
-			gl_Position = vec4(aPosition, 1.0);
-		}
-	)";
-
-	std::string fragentSrc = R"(
-		#version 330 core
-		
-		layout(location = 0) out vec4 oColor;
-		
-		in vec3 vPosition;
-		in vec4 vColor;
-
-		void main()
-		{
-			oColor = vColor;
-		}
-	
-	)";
-
-	mShader.reset(new Shader(vertexSrc, fragentSrc));
+	mShader.reset(new Shader());
 }
 
 
@@ -89,13 +57,14 @@ void Walnut::Application::Run()
 {
 	while (mRunning)
 	{
-		glClearColor(0.2f, 0, 0.1f, 1);
-		glClear(GL_COLOR_BUFFER_BIT);
-
 		//RenderTest
+		RenderCommand::SetClearColor({ 0.2f, 0, 0.1f, 1 });
+		RenderCommand::Clear();
+
+		Renderer::BeginScene();
 		mShader->Bind();
-		mVertexArray->Bind();
-		glDrawElements(GL_TRIANGLES, mVertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+		Renderer::Submit(mVertexArray);
+		Renderer::EndScene();
 
 		for (Layer* layer : mLayerStack)
 			layer->OnUpdate();

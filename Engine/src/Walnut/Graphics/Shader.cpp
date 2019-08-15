@@ -2,7 +2,57 @@
 #include "Shader.h"
 #include "glad/glad.h"
 
+Walnut::Shader::Shader()
+{
+	std::string vertexSrc = R"(
+		#version 330 core
+		
+		layout(location = 0) in vec3 aPosition;
+		
+		out vec3 vPosition;
+
+		void main()
+		{
+			gl_Position = vec4(aPosition, 1.0);
+		}
+	)";
+
+	std::string fragentSrc = R"(
+		#version 330 core
+		
+		layout(location = 0) out vec4 oColor;
+		
+		void main()
+		{
+			oColor = vec4(1.0,1.0,1.0,1.0);
+		}
+	
+	)";
+
+	Init(vertexSrc, fragentSrc);
+}
+
 Walnut::Shader::Shader(const std::string & vertexSrc, const std::string & fragmentSrc)
+{
+	Init(vertexSrc, fragmentSrc);
+}
+
+Walnut::Shader::~Shader()
+{
+	glDeleteProgram(mRenderID);
+}
+
+void Walnut::Shader::Bind() const
+{
+	glUseProgram(mRenderID);
+}
+
+void Walnut::Shader::Unbind() const
+{
+	glUseProgram(0);
+}
+
+void Walnut::Shader::Init(const std::string& vertexSrc, const std::string& fragmentSrc)
 {
 	// Create an empty vertex shader handle
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -109,19 +159,4 @@ Walnut::Shader::Shader(const std::string & vertexSrc, const std::string & fragme
 	// Always detach shaders after a successful link.
 	glDetachShader(mRenderID, vertexShader);
 	glDetachShader(mRenderID, fragmentShader);
-}
-
-Walnut::Shader::~Shader()
-{
-	glDeleteProgram(mRenderID);
-}
-
-void Walnut::Shader::Bind() const
-{
-	glUseProgram(mRenderID);
-}
-
-void Walnut::Shader::Unbind() const
-{
-	glUseProgram(0);
 }

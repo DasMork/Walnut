@@ -7,8 +7,8 @@ Walnut::VertexArray* Walnut::VertexArray::Create()
 {
 	switch (Renderer::GetAPI())
 	{
-	case RendererAPI::None: WN_CORE_ASSERT(false, "RendererAPI::None is currently not supported");
-	case RendererAPI::OpenGL: return new GLVertexArray();
+	case RendererAPI::API::None: WN_CORE_ASSERT(false, "RendererAPI::None is currently not supported");
+	case RendererAPI::API::OpenGL: return new GLVertexArray();
 	}
 
 	WN_CORE_ASSERT(false, "Unknown RendererAPI");

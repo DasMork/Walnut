@@ -1,4 +1,18 @@
 #include "wnpch.h"
 #include "Renderer.h"
+#include "RenderCommand.h"
 
-Walnut::RendererAPI Walnut::Renderer::sRendererAPI = Walnut::RendererAPI::OpenGL;
+void Walnut::Renderer::BeginScene()
+{
+}
+
+void Walnut::Renderer::EndScene()
+{
+
+}
+
+void Walnut::Renderer::Submit(const std::shared_ptr<VertexArray>& vertexArray)
+{
+	vertexArray->Bind();
+	RenderCommand::DrawIndexed(vertexArray);
+}
