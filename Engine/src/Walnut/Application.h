@@ -4,6 +4,9 @@
 #include "Events/ApplicationEvent.h"
 #include "LayerStack.h"
 #include "ImGui/ImGuiLayer.h"
+#include "Graphics/Shader.h"
+#include "Graphics/Buffer.h"
+#include "Graphics/VertexArray.h"
 
 namespace Walnut
 {
@@ -28,6 +31,9 @@ namespace Walnut
 		std::unique_ptr<Window> mWindow;
 		ImGuiLayer* mImGuiLayer;
 		LayerStack mLayerStack;
+
+		std::shared_ptr<VertexArray> mVertexArray;
+		std::shared_ptr<Shader> mShader;
 
 		static Application* sInstance;
 	};

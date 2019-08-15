@@ -17,14 +17,14 @@ namespace Walnut
 		unsigned int GetWidth() const override;
 		unsigned int GetHeight() const override;
 
-		virtual void SetEventCallback(const EventCallbackFn & callback) override
+		void SetEventCallback(const EventCallbackFn & callback) override
 		{
 			mData.EventCallback = callback;
 		};
-		virtual void SetVSync(bool enabled) override;
-		virtual bool IsVSync() const override;
+		void SetVSync(bool enabled) override;
+		bool IsVSync() const override;
 
-		inline virtual void* GetNativeWindow() const { return mWindow; }
+		inline void* GetNativeWindow() const override { return mWindow; }
 
 	private:
 		virtual void Init(const WindowProps& props);
