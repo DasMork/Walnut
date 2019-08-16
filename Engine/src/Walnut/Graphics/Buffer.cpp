@@ -1,7 +1,7 @@
 #include "wnpch.h"
 #include "Buffer.h"
 #include "Renderer.h"
-#include "Walnut/Platform/Windows/GLBuffer.h"
+#include "Walnut/Platform/OpenGL/GLBuffer.h"
 
 Walnut::VertexBuffer* Walnut::VertexBuffer::Create(float* vertices, uint32_t size)
 {

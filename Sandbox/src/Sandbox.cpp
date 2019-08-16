@@ -1,12 +1,14 @@
 #include <Walnut.h>
 
-#include "imgui/imgui.h"
+#include "ImGui/imgui.h"
+#include "Walnut/Platform/OpenGL/GLShader.h"
+#include <glm/gtc/type_ptr.hpp>
 
 class SandboxLayer : public Walnut::Layer
 {
 public:
 	SandboxLayer(const std::string& name)
-		: Layer(name), mCamera(-1.6f, 1.6f, -0.9f, 0.9f)
+		: Layer(name), mCamera(-1.6f, 1.6f, -0.9f, 0.9f), mSquareColor({ 0,0,0 }), mSquareColor2({ 0,0,0 })
 	{
 		//RenderTest
 		mVertexArray.reset(Walnut::VertexArray::Create());
@@ -36,13 +38,18 @@ public:
 		indexBuffer.reset(Walnut::IndexBuffer::Create(indices, 6));
 		mVertexArray->SetIndexBuffer(indexBuffer);
 
-		mShader.reset(new Walnut::Shader());
+		mShader.reset(Walnut::Shader::CreateDefault());
 	}
 
 	void OnImGuiRender(Walnut::Timestep ts) override
 	{
 		bool show = true;
 		ShowStatsWindow(&show, ts);
+
+		ImGui::Begin("Properties");
+		ImGui::ColorEdit3("Square Color", glm::value_ptr(mSquareColor));
+		ImGui::ColorEdit3("Square2 Color", glm::value_ptr(mSquareColor2));
+		ImGui::End();
 	}
 
 	void OnEvent(Walnut::Event& event) override
@@ -85,7 +92,16 @@ public:
 		mCamera.SetRotation(mCamera.GetRotation() + r);
 
 		Walnut::Renderer::BeginScene(mCamera);
-		Walnut::Renderer::Submit(mShader, mVertexArray, glm::mat4(1.0f));
+
+		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f, 0.5f, 0.5f));
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(-0.5f, 0, 0));
+		glm::mat4 transform2 = glm::translate(glm::mat4(1.0f), glm::vec3(0.5f, 0, 0));
+
+
+		std::dynamic_pointer_cast<Walnut::GLShader>(mShader)->UploadUniformFloat3("uColor", mSquareColor);
+		Walnut::Renderer::Submit(mShader, mVertexArray, transform * scale);
+		std::dynamic_pointer_cast<Walnut::GLShader>(mShader)->UploadUniformFloat3("uColor", mSquareColor2);
+		Walnut::Renderer::Submit(mShader, mVertexArray, transform2 * scale);
 		Walnut::Renderer::EndScene();
 	}
 
@@ -127,6 +143,8 @@ private:
 	std::shared_ptr<Walnut::Shader> mShader;
 
 	Walnut::OrthographicCamera mCamera;
+	glm::vec3 mSquareColor;
+	glm::vec3 mSquareColor2;
 };
 
 class Sandbox : public Walnut::Application

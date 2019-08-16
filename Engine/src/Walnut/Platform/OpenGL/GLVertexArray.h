@@ -1,6 +1,6 @@
 #pragma once
-#include "VertexArray.h"
 #include <vector>
+#include "Walnut/Graphics/VertexArray.h"
 
 namespace Walnut
 {

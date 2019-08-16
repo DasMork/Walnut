@@ -5,7 +5,7 @@
 #include "Walnut/Events/ApplicationEvent.h"
 #include "Walnut/Events/KeyEvent.h"
 #include "Walnut/Events/MouseEvent.h"
-#include "Walnut/Graphics/OpenGLContext.h"
+#include "OpenGLContext.h"
 
 static bool sGLFWInitialized;
 

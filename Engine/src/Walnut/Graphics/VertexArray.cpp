@@ -1,7 +1,7 @@
 #include "wnpch.h"
 #include "VertexArray.h"
 #include "Renderer.h"
-#include "GLVertexArray.h"
+#include "Walnut/Platform/OpenGL/GLVertexArray.h"
 
 Walnut::VertexArray* Walnut::VertexArray::Create()
 {
