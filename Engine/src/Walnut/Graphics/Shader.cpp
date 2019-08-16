@@ -2,6 +2,8 @@
 #include "Shader.h"
 #include "glad/glad.h"
 
+#include <glm/gtc/type_ptr.hpp>
+
 Walnut::Shader::Shader()
 {
 	std::string vertexSrc = R"(
@@ -9,11 +11,13 @@ Walnut::Shader::Shader()
 		
 		layout(location = 0) in vec3 aPosition;
 		
+		uniform mat4 uViewProjection;
+
 		out vec3 vPosition;
 
 		void main()
 		{
-			gl_Position = vec4(aPosition, 1.0);
+			gl_Position = uViewProjection * vec4(aPosition, 1.0);
 		}
 	)";
 
@@ -50,6 +54,12 @@ void Walnut::Shader::Bind() const
 void Walnut::Shader::Unbind() const
 {
 	glUseProgram(0);
+}
+
+void Walnut::Shader::UploadUniformMat4(const std::string& name, const glm::mat4& matrix)
+{
+	int location = glGetUniformLocation(mRenderID, name.c_str());
+	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
 void Walnut::Shader::Init(const std::string& vertexSrc, const std::string& fragmentSrc)

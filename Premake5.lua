@@ -114,7 +114,8 @@ project "Sandbox"
 	{
 		"Engine/Extern/spdlog/include",
 		"%{IncludeDir.glm}",
-		"Engine/src"
+		"Engine/src",
+		"Engine/Extern"
 	}
 
 	links

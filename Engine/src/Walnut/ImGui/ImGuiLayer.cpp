@@ -57,7 +57,7 @@ void Walnut::ImGuiLayer::OnDetach()
 	ImGui::DestroyContext();
 }
 
-void Walnut::ImGuiLayer::OnImGuiRender()
+void Walnut::ImGuiLayer::OnImGuiRender(Timestep ts)
 {
 	static bool show = true;
 	ImGui::ShowDemoWindow(&show);

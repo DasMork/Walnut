@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <glm/mat4x4.hpp>
 
 namespace Walnut
 {
@@ -12,6 +13,8 @@ namespace Walnut
 
 		void Bind() const;
 		void Unbind() const;
+
+		void UploadUniformMat4(const std::string& name, const glm::mat4& matrix);
 	private:
 		void Init(const std::string& vertexSrc, const std::string& fragmentSrc);
 

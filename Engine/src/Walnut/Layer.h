@@ -3,6 +3,7 @@
 
 #include "Core.h"
 #include "Events/Event.h"
+#include "Core/Timestep.h"
 
 namespace Walnut
 {
@@ -14,8 +15,8 @@ namespace Walnut
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate() {}
-		virtual void OnImGuiRender() {}
+		virtual void OnUpdate(Timestep ts) {}
+		virtual void OnImGuiRender(Timestep ts) {}
 		virtual void OnEvent(Event& event) {}
 
 		inline const std::string& GetName() const { return mDebugName; }

@@ -3,6 +3,9 @@
 #include "Application.h"
 #include "Graphics/RenderCommand.h"
 #include "Graphics/Renderer.h"
+#include "Input.h"
+#include "KeyCodes.h"
+#include "GLFW/glfw3.h"
 
 Walnut::Application* Walnut::Application::sInstance = nullptr;
 
@@ -17,35 +20,6 @@ Walnut::Application::Application()
 
 	mImGuiLayer = new ImGuiLayer();
 	PushOverlay(mImGuiLayer);
-
-	//RenderTest
-	mVertexArray.reset(VertexArray::Create());
-
-	float vertices[4 * 7] = {
-		-0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
-		 0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-		 0.5f,  0.5f, 0.0f, 0.5f, 1.0f, 1.0f, 1.0f,
-		 -0.5f,  0.5f, 0.0f,0.0f, 0.5f, 1.0f, 1.0f
-	};
-	std::shared_ptr<VertexBuffer> vertexbuffer;
-	vertexbuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
-
-	BufferLayout layout = {
-		{ShaderDataType::Float3, "aPosition"},
-		{ShaderDataType::Float4, "aColor"}
-	};
-
-	vertexbuffer->SetLayout(layout);
-
-	mVertexArray->AddVertexBuffer(vertexbuffer);
-
-	uint32_t indices[6] = { 0,1,2,0,2,3 };
-
-	std::shared_ptr<IndexBuffer> indexBuffer;
-	indexBuffer.reset(IndexBuffer::Create(indices, 6));
-	mVertexArray->SetIndexBuffer(indexBuffer);
-
-	mShader.reset(new Shader());
 }
 
 
@@ -57,21 +31,16 @@ void Walnut::Application::Run()
 {
 	while (mRunning)
 	{
-		//RenderTest
-		RenderCommand::SetClearColor({ 0.2f, 0, 0.1f, 1 });
-		RenderCommand::Clear();
-
-		Renderer::BeginScene();
-		mShader->Bind();
-		Renderer::Submit(mVertexArray);
-		Renderer::EndScene();
+		float time = (float)glfwGetTime(); //TODO Move to Platform::GetTime
+		Timestep timestep = time - mLastFrameTime;
+		mLastFrameTime = time;
 
 		for (Layer* layer : mLayerStack)
-			layer->OnUpdate();
+			layer->OnUpdate(timestep);
 
 		mImGuiLayer->Begin();
 		for (Layer* layer : mLayerStack)
-			layer->OnImGuiRender();
+			layer->OnImGuiRender(timestep);
 		mImGuiLayer->End();
 
 
