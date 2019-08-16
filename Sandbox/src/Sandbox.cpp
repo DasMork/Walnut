@@ -85,11 +85,11 @@ public:
 		mCamera.SetRotation(mCamera.GetRotation() + r);
 
 		Walnut::Renderer::BeginScene(mCamera);
-		Walnut::Renderer::Submit(mShader, mVertexArray);
+		Walnut::Renderer::Submit(mShader, mVertexArray, glm::mat4(1.0f));
 		Walnut::Renderer::EndScene();
 	}
 
-	void ShowStatsWindow(bool* p_open, Walnut::Timestep ts)
+	void ShowStatsWindow(bool* p_open, Walnut::Timestep ts) const
 	{
 		// FIXME-VIEWPORT-ABS: Select a default viewport
 		const float DISTANCE = 10.0f;
