@@ -11,11 +11,11 @@ public:
 		//RenderTest
 		mVertexArray.reset(Walnut::VertexArray::Create());
 
-		float vertices[4 * 3] = {
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.5f,  0.5f, 0.0f,
-			 -0.5f,  0.5f, 0.0f
+		float vertices[4 * 7] = {
+			-0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+			 0.5f, -0.5f, 0.0f,1.0f, 1.0f, 1.0f, 1.0f,
+			 0.5f,  0.5f, 0.0f,1.0f, 1.0f, 1.0f, 1.0f,
+			 -0.5f,  0.5f, 0.0f,1.0f, 1.0f, 1.0f, 1.0f
 		};
 
 		std::shared_ptr<Walnut::VertexBuffer> vertexbuffer;
