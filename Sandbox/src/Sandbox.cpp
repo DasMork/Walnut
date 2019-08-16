@@ -8,48 +8,28 @@ class SandboxLayer : public Walnut::Layer
 {
 public:
 	SandboxLayer(const std::string& name)
-		: Layer(name), mCamera(-1.6f, 1.6f, -0.9f, 0.9f), mSquareColor({ 0,0,0 }), mSquareColor2({ 0,0,0 })
+		: Layer(name), mCamera(-16, 16, -9, 9), mSquareColor({ 0,0,0 }), mSquareColor2({ 0,0,0 })
 	{
-		//RenderTest
-		mVertexArray.reset(Walnut::VertexArray::Create());
+		auto square = std::make_shared<Walnut::Square>();
+		square->SetPosition(glm::vec3(-0.5f, 0, 0));
 
-		float vertices[4 * 7] = {
-			-0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-			 0.5f, -0.5f, 0.0f,1.0f, 1.0f, 1.0f, 1.0f,
-			 0.5f,  0.5f, 0.0f,1.0f, 1.0f, 1.0f, 1.0f,
-			 -0.5f,  0.5f, 0.0f,1.0f, 1.0f, 1.0f, 1.0f
-		};
+		auto square2 = std::make_shared<Walnut::Square>();
+		square2->SetPosition(glm::vec3(0.5f, 0.2f, 0));
 
-		std::shared_ptr<Walnut::VertexBuffer> vertexbuffer;
-		vertexbuffer.reset(Walnut::VertexBuffer::Create(vertices, sizeof(vertices)));
+		auto square3 = std::make_shared<Walnut::Square>();
+		square3->SetPosition(glm::vec3(0.8f, 0, 0));
 
-		Walnut::BufferLayout layout = {
-			{Walnut::ShaderDataType::Float3, "aPosition"},
-			{Walnut::ShaderDataType::Float4, "aColor"}
-		};
-
-		vertexbuffer->SetLayout(layout);
-
-		mVertexArray->AddVertexBuffer(vertexbuffer);
-
-		uint32_t indices[6] = { 0,1,2,0,2,3 };
-
-		std::shared_ptr<Walnut::IndexBuffer> indexBuffer;
-		indexBuffer.reset(Walnut::IndexBuffer::Create(indices, 6));
-		mVertexArray->SetIndexBuffer(indexBuffer);
-
-		mShader.reset(Walnut::Shader::CreateDefault());
+		mSquares.push_back(square);
+		mSquares.push_back(square2);
+		mSquares.push_back(square3);
 	}
 
 	void OnImGuiRender(Walnut::Timestep ts) override
 	{
 		bool show = true;
 		ShowStatsWindow(&show, ts);
-
-		ImGui::Begin("Properties");
-		ImGui::ColorEdit3("Square Color", glm::value_ptr(mSquareColor));
-		ImGui::ColorEdit3("Square2 Color", glm::value_ptr(mSquareColor2));
-		ImGui::End();
+		DrawDockSpace();
+		DrawInspector();
 	}
 
 	void OnEvent(Walnut::Event& event) override
@@ -98,12 +78,137 @@ public:
 		glm::mat4 transform2 = glm::translate(glm::mat4(1.0f), glm::vec3(0.5f, 0, 0));
 
 
-		std::dynamic_pointer_cast<Walnut::GLShader>(mShader)->UploadUniformFloat3("uColor", mSquareColor);
+		/*std::dynamic_pointer_cast<Walnut::GLShader>(mShader)->UploadUniformFloat3("uColor", mSquareColor);
 		Walnut::Renderer::Submit(mShader, mVertexArray, transform * scale);
 		std::dynamic_pointer_cast<Walnut::GLShader>(mShader)->UploadUniformFloat3("uColor", mSquareColor2);
-		Walnut::Renderer::Submit(mShader, mVertexArray, transform2 * scale);
+		Walnut::Renderer::Submit(mShader, mVertexArray, transform2 * scale);*/
+
+		for (const auto& square : mSquares)
+		{
+			Walnut::Renderer::Submit(square);
+		}
+
 		Walnut::Renderer::EndScene();
 	}
+
+	void DrawInspector()
+	{
+		ImGui::Begin("Inspector");
+
+		static int selected = 0;
+		ImGui::BeginChild("left pane", ImVec2(150, 0), true);
+		int i = 0;
+		for (auto& square : mSquares)
+		{
+			if (ImGui::Selectable(square->GetName().c_str(), selected == i))
+				selected = i;
+			i++;
+		}
+		ImGui::EndChild();
+		ImGui::SameLine();
+
+		// right
+		ImGui::BeginGroup();
+		ImGui::BeginChild("item view", ImVec2(0, -ImGui::GetFrameHeightWithSpacing())); // Leave room for 1 line below us
+		if (ImGui::BeginTabBar("##Tabs", ImGuiTabBarFlags_None))
+		{
+			if (ImGui::BeginTabItem("Properties"))
+			{
+				ImGui::Text("Transform");
+
+				//Position
+				glm::vec3 pos = mSquares[selected]->GetPosition();
+				ImGui::InputFloat3("Position", glm::value_ptr(pos));
+				mSquares[selected]->SetPosition(pos);
+				//Scale
+				glm::vec3 scale = mSquares[selected]->GetScale();
+				ImGui::InputFloat3("Scale", glm::value_ptr(scale));
+				mSquares[selected]->SetScale(scale);
+
+				ImGui::Separator();
+				ImGui::Text("Material");
+
+				//Color
+				glm::vec3 color = mSquares[selected]->GetColor();
+				ImGui::ColorEdit3("Color", glm::value_ptr(color));
+				mSquares[selected]->SetColor(color);
+				ImGui::EndTabItem();
+			}
+			ImGui::EndTabBar();
+		}
+		ImGui::EndChild();
+		if (ImGui::Button("Add"))
+		{
+			auto square = std::make_shared<Walnut::Square>();
+			mSquares.push_back(square);
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Remove"))
+		{
+			mSquares.erase(mSquares.begin() + selected);
+			selected--;
+
+			if (selected < 0)
+				selected = 0;
+		}
+		ImGui::EndGroup();
+		ImGui::End();
+	}
+
+	void DrawDockSpace()
+	{
+		bool open = true;
+
+		static bool opt_fullscreen_persistant = true;
+		static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_PassthruDockspace;
+		bool opt_fullscreen = opt_fullscreen_persistant;
+
+		// We are using the ImGuiWindowFlags_NoDocking flag to make the parent window not dockable into,
+		// because it would be confusing to have two docking targets within each others.
+		ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+		if (opt_fullscreen)
+		{
+			ImGuiViewport* viewport = ImGui::GetMainViewport();
+			ImGui::SetNextWindowPos(viewport->Pos);
+			ImGui::SetNextWindowSize(viewport->Size);
+			ImGui::SetNextWindowViewport(viewport->ID);
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+			window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+			window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+		}
+
+		// When using ImGuiDockNodeFlags_PassthruDockspace, DockSpace() will render our background and handle the pass-thru hole, so we ask Begin() to not render a background.
+		if (opt_flags & ImGuiDockNodeFlags_PassthruDockspace)
+			window_flags |= ImGuiWindowFlags_NoBackground;
+
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+		ImGui::Begin("DockSpace", &open, window_flags);
+		ImGui::PopStyleVar();
+
+		if (opt_fullscreen)
+			ImGui::PopStyleVar(2);
+
+		// Dockspace
+		ImGuiIO& io = ImGui::GetIO();
+		if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
+		{
+			ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
+			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), opt_flags);
+		}
+
+		if (ImGui::BeginMenuBar())
+		{
+			if (ImGui::BeginMenu("File"))
+			{
+				ImGui::EndMenu();
+			}
+			ImGui::EndMenuBar();
+		}
+
+		ImGui::End();
+	}
+
 
 	void ShowStatsWindow(bool* p_open, Walnut::Timestep ts) const
 	{
@@ -139,6 +244,7 @@ public:
 	}
 
 private:
+	std::vector<std::shared_ptr<Walnut::Square>> mSquares;
 	std::shared_ptr<Walnut::VertexArray> mVertexArray;
 	std::shared_ptr<Walnut::Shader> mShader;
 

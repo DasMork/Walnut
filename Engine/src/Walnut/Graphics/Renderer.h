@@ -2,6 +2,7 @@
 #include "RendererAPI.h"
 #include "Shader.h"
 #include "Camera.h"
+#include "Walnut/Square.h"
 
 
 namespace Walnut
@@ -13,6 +14,7 @@ namespace Walnut
 		static void EndScene();
 
 		static void Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr <VertexArray>& vertexArray, const glm::mat4& transform = glm::mat4(1.0f));
+		static void Submit(const std::shared_ptr<Square>& square);
 
 		static inline RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 
