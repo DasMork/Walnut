@@ -25,9 +25,10 @@ void Walnut::Renderer::Submit(const std::shared_ptr<Shader>& shader, const std::
 	RenderCommand::DrawIndexed(vertexArray);
 }
 
-void Walnut::Renderer::Submit(const std::shared_ptr<Square>& square)
+void Walnut::Renderer::Submit(const std::shared_ptr<Renderable>& square)
 {
-	glBindTexture(GL_TEXTURE_2D, square->GetTexture());
+	if (square->HasTexture())
+		glBindTexture(GL_TEXTURE_2D, square->GetTexture());
 	square->GetShader()->Bind();
 	std::dynamic_pointer_cast<Walnut::GLShader>(square->GetShader())->UploadUniformMat4("uViewProjection", mSceneData->ViewProjectionMatrix);
 	std::dynamic_pointer_cast<Walnut::GLShader>(square->GetShader())->UploadUniformMat4("uTransform", square->GetTransform());

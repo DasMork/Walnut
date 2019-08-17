@@ -1,13 +1,15 @@
 #include "wnpch.h"
 #include "Cube.h"
 
-#include <glm/ext/matrix_transform.inl>
-
-int Walnut::Cube::mID = 0;
-
 Walnut::Cube::Cube(const glm::vec3 & color)
-	: mPosition(glm::vec3(0, 0, 0)), mColor(color), mScale(glm::vec3(1, 1, 1))
+	:Renderable()
 {
+
+	mPosition = glm::vec3(0, 0, 0);
+	mColor = color;
+	mScale = glm::vec3(1, 1, 1);
+
+	mHasTexture = false;
 
 	std::stringstream ss;
 	ss << "Cube " << mID++;
@@ -17,15 +19,15 @@ Walnut::Cube::Cube(const glm::vec3 & color)
 
 	float vertices[] = {
 		// front
-		-1.0, -1.0,  1.0, 0.0f, 0.0f,
-		 1.0, -1.0,  1.0, 1.0f, 0.0f,
-		 1.0,  1.0,  1.0, 1.0f, 1.0f,
-		-1.0,  1.0,  1.0, 0.0f, 1.0f,
+		-1.0, -1.0,  1.0,
+		 1.0, -1.0,  1.0,
+		 1.0,  1.0,  1.0,
+		-1.0,  1.0,  1.0,
 		// back
-		-1.0, -1.0, -1.0, 0.0f, 0.0f,
-		 1.0, -1.0, -1.0, 1.0f, 0.0f,
-		 1.0,  1.0, -1.0, 1.0f, 1.0f,
-		-1.0,  1.0, -1.0, 0.0f, 1.0f
+		-1.0, -1.0, -1.0,
+		 1.0, -1.0, -1.0,
+		 1.0,  1.0, -1.0,
+		-1.0,  1.0, -1.0
 	};
 
 	std::shared_ptr<VertexBuffer> vertexbuffer;
@@ -68,26 +70,3 @@ Walnut::Cube::Cube(const glm::vec3 & color)
 
 	CalculateTransform();
 }
-
-void Walnut::Cube::SetPosition(const glm::vec3& pos)
-{
-	mPosition = pos;
-	CalculateTransform();
-}
-
-void Walnut::Cube::SetScale(const glm::vec3& scale)
-{
-	mScale = scale;
-	CalculateTransform();
-}
-
-const glm::mat4 & Walnut::Cube::GetTransform() const
-{
-	return mTransform;
-}
-
-void Walnut::Cube::CalculateTransform()
-{
-	mTransform = translate(glm::mat4(1.0f), mPosition) * scale(glm::mat4(1.0f), mScale);
-}
-

@@ -1,17 +1,18 @@
 #include "wnpch.h"
 #include "Square.h"
-#include <glm/ext/matrix_transform.inl>
-
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "../Extern/stb_image.h"
 #include "glad/glad.h"
 
-int Walnut::Square::mID = 0;
-
 Walnut::Square::Square(const glm::vec3 & color)
-	: mPosition(glm::vec3(0, 0, 0)), mColor(color), mScale(glm::vec3(1, 1, 1))
+	: Renderable()
 {
+	mPosition = glm::vec3(0, 0, 0);
+	mColor = color;
+	mScale = glm::vec3(1, 1, 1);
+
+	mHasTexture = true;
 
 	std::stringstream ss;
 	ss << "Square " << mID++;
@@ -76,26 +77,3 @@ Walnut::Square::Square(const glm::vec3 & color)
 
 	CalculateTransform();
 }
-
-void Walnut::Square::SetPosition(const glm::vec3& pos)
-{
-	mPosition = pos;
-	CalculateTransform();
-}
-
-void Walnut::Square::SetScale(const glm::vec3& scale)
-{
-	mScale = scale;
-	CalculateTransform();
-}
-
-const glm::mat4 & Walnut::Square::GetTransform() const
-{
-	return mTransform;
-}
-
-void Walnut::Square::CalculateTransform()
-{
-	mTransform = translate(glm::mat4(1.0f), mPosition) * scale(glm::mat4(1.0f), mScale);
-}
-

@@ -3,7 +3,7 @@
 #include "ImGui/imgui.h"
 #include "Walnut/Platform/OpenGL/GLShader.h"
 #include <glm/gtc/type_ptr.hpp>
-
+#include "Walnut/Cube.h"
 
 
 class SandboxLayer : public Walnut::Layer
@@ -22,12 +22,12 @@ public:
 		auto square2 = std::make_shared<Walnut::Square>();
 		square2->SetPosition(glm::vec3(3, 2, 0));
 
-		auto square3 = std::make_shared<Walnut::Square>();
+		auto square3 = std::make_shared<Walnut::Cube>();
 		square3->SetPosition(glm::vec3(8, 4, 0));
 
-		mSquares.push_back(square);
-		mSquares.push_back(square2);
-		mSquares.push_back(square3);
+		mObjects.push_back(square);
+		mObjects.push_back(square2);
+		mObjects.push_back(square3);
 
 		Walnut::RenderCommand::EnableDepthTesting();
 	}
@@ -81,7 +81,7 @@ public:
 
 		Walnut::Renderer::BeginScene(*mCamera);
 
-		for (const auto& square : mSquares)
+		for (const auto& square : mObjects)
 		{
 			Walnut::Renderer::Submit(square);
 		}
@@ -96,7 +96,7 @@ public:
 		static int selected = 0;
 		ImGui::BeginChild("left pane", ImVec2(150, 0), true);
 		int i = 0;
-		for (auto& square : mSquares)
+		for (auto& square : mObjects)
 		{
 			if (ImGui::Selectable(square->GetName().c_str(), selected == i))
 				selected = i;
@@ -115,24 +115,24 @@ public:
 				ImGui::Text("Transform");
 
 				//Position
-				glm::vec3 pos = mSquares[selected]->GetPosition();
+				glm::vec3 pos = mObjects[selected]->GetPosition();
 				ImGui::InputFloat3("Position", glm::value_ptr(pos));
-				mSquares[selected]->SetPosition(pos);
+				mObjects[selected]->SetPosition(pos);
 				//Scale
-				glm::vec3 scale = mSquares[selected]->GetScale();
+				glm::vec3 scale = mObjects[selected]->GetScale();
 				ImGui::InputFloat3("Scale", glm::value_ptr(scale));
-				mSquares[selected]->SetScale(scale);
+				mObjects[selected]->SetScale(scale);
 
 				ImGui::Separator();
 				ImGui::Text("Material");
 
 				//Color
-				glm::vec3 color = mSquares[selected]->GetColor();
+				glm::vec3 color = mObjects[selected]->GetColor();
 				ImGui::ColorEdit3("Color", glm::value_ptr(color));
-				mSquares[selected]->SetColor(color);
+				mObjects[selected]->SetColor(color);
 
-				//Texture#
-				uint32_t textureId = mSquares[selected]->GetTexture();
+				//Texture
+				uint32_t textureId = mObjects[selected]->GetTexture();
 				ImGui::Image((void*)textureId, ImVec2(50, 50), ImVec2(0, 0), ImVec2(1, 1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
 				ImGui::SameLine();
 				ImGui::Text("Texture");
@@ -150,12 +150,12 @@ public:
 		if (ImGui::Button("Add"))
 		{
 			auto square = std::make_shared<Walnut::Square>();
-			mSquares.push_back(square);
+			mObjects.push_back(square);
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Remove"))
 		{
-			mSquares.erase(mSquares.begin() + selected);
+			mObjects.erase(mObjects.begin() + selected);
 			selected--;
 
 			if (selected < 0)
@@ -254,7 +254,7 @@ public:
 	}
 
 private:
-	std::vector<std::shared_ptr<Walnut::Square>> mSquares;
+	std::vector<std::shared_ptr<Walnut::Renderable>> mObjects;
 	std::shared_ptr<Walnut::VertexArray> mVertexArray;
 	std::shared_ptr<Walnut::Shader> mShader;
 	std::shared_ptr<Walnut::Camera> mCamera;
