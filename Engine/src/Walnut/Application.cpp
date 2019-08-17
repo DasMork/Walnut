@@ -37,20 +37,21 @@ void Walnut::Application::Run()
 		Timestep timestep = time - mLastFrameTime;
 		mLastFrameTime = time;
 
+		RenderCommand::SetClearColor({ 0.1f,0.1f,0.1f,1 });
 		RenderCommand::Clear();
+		std::pair<int, int> frameBufferSize = { mWindow->GetWidth() * 0.7f, mWindow->GetHeight() * 0.7f };
 
 		//Frame Buffer
 		unsigned int fbo;
 		glGenFramebuffers(1, &fbo);
 
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-		RenderCommand::Clear();
 
 		unsigned int texture;
 		glGenTextures(1, &texture);
 		glBindTexture(GL_TEXTURE_2D, texture);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1600, 900, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, frameBufferSize.first, frameBufferSize.second, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -66,12 +67,11 @@ void Walnut::Application::Run()
 
 		mImGuiLayer->Begin();
 
-
-
 		for (Layer* layer : mLayerStack)
 			layer->OnImGuiRender(timestep);
 		//create our ImGui window
 		//ImGuiWindowFlags flags = ImGuiWindowFlags_
+		ImGui::SetNextWindowSize(ImVec2(frameBufferSize.first, frameBufferSize.second));
 		ImGui::Begin("Scene Window");
 
 		//pass the texture of the FBO
@@ -83,8 +83,8 @@ void Walnut::Application::Run()
 		ImGui::GetWindowDrawList()->AddImage(
 			(void *)texture,
 			ImVec2(ImGui::GetCursorScreenPos()),
-			ImVec2(ImGui::GetCursorScreenPos().x + 1280,
-				ImGui::GetCursorScreenPos().y + 720), ImVec2(0, 1), ImVec2(1, 0));
+			ImVec2(ImGui::GetCursorScreenPos().x + frameBufferSize.first,
+				ImGui::GetCursorScreenPos().y + frameBufferSize.second), ImVec2(0, 1), ImVec2(1, 0));
 
 		//we are done working with this window
 		ImGui::End();

@@ -3,10 +3,10 @@
 
 namespace Walnut
 {
-	class OrthographicCamera
+	class Camera
 	{
 	public:
-		OrthographicCamera(float left, float right, float bottom, float top);
+		virtual ~Camera() = default;
 
 		const glm::vec3& GetPosition() const { return mPosition; }
 		float GetRotation() const { return mRotation; }
@@ -17,14 +17,32 @@ namespace Walnut
 		void SetPosition(const glm::vec3& position) { mPosition = position; CalculateMatrices(); }
 		void SetRotation(float rot) { mRotation = rot; CalculateMatrices(); }
 
-	private:
-		void CalculateMatrices();
-	private:
+	protected:
+		virtual void CalculateMatrices() = 0;
+	protected:
 		glm::mat4 mProjectionMatrix;
 		glm::mat4 mViewMatrix;
 		glm::mat4 mViewProjectionMatrix;
 
 		glm::vec3 mPosition;
 		float mRotation = 0;
+	};
+
+	class OrthographicCamera : public Camera
+	{
+	public:
+		virtual ~OrthographicCamera() = default;
+		OrthographicCamera(float left, float right, float bottom, float top);
+	protected:
+		void CalculateMatrices() override;
+	};
+
+	class PerspectiveCamera : public Camera
+	{
+	public:
+		virtual ~PerspectiveCamera() = default;
+		PerspectiveCamera(float fov, float width, float height, float nearPlane, float farPlane);
+	protected:
+		void CalculateMatrices() override;
 	};
 }

@@ -1,15 +1,14 @@
 #pragma once
-#include <glm/vec3.hpp>
 #include "Graphics/Shader.h"
 #include "Graphics/VertexArray.h"
 #include <glm/glm.hpp>
 
 namespace Walnut
 {
-	class Square
+	class Cube
 	{
 	public:
-		Square(const glm::vec3& color = { 1,1,1 });
+		Cube(const glm::vec3& color = { 1,1,1 });
 
 
 		void SetColor(const glm::vec3& color) { mColor = color; }
@@ -19,7 +18,6 @@ namespace Walnut
 		const glm::vec3& GetPosition() const { return mPosition; }
 		const glm::vec3& GetScale() const { return mScale; }
 		const std::string& GetName() const { return mName; }
-		uint32_t GetTexture() const { return mTexture; }
 		const glm::mat4& GetTransform() const;
 		const std::shared_ptr<Walnut::Shader>& GetShader() const { return mShader; }
 		const std::shared_ptr<Walnut::VertexArray>& GetVA() const { return mVertexArray; }
@@ -37,6 +35,5 @@ namespace Walnut
 		glm::vec3 mScale;
 		glm::mat4 mTransform;
 
-		uint32_t mTexture;
 	};
 }

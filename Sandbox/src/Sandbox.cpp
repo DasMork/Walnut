@@ -4,24 +4,32 @@
 #include "Walnut/Platform/OpenGL/GLShader.h"
 #include <glm/gtc/type_ptr.hpp>
 
+
+
 class SandboxLayer : public Walnut::Layer
 {
 public:
 	SandboxLayer(const std::string& name)
-		: Layer(name), mCamera(-16, 16, -9, 9), mSquareColor({ 0,0,0 }), mSquareColor2({ 0,0,0 })
+		: Layer(name), mSquareColor({ 0,0,0 }), mSquareColor2({ 0,0,0 })
 	{
+		//mCamera.reset(new Walnut::OrthographicCamera(0, 16, 0, 9));
+		mCamera.reset(new Walnut::PerspectiveCamera(65, 16, 9, 0.1f, 100));
+		//mCamera->SetPosition({ 16, 9, 2 });
+		mCamera->SetPosition(glm::vec3(8, 4.5f, 10));
 		auto square = std::make_shared<Walnut::Square>();
-		square->SetPosition(glm::vec3(-0.5f, 0, 0));
+		square->SetPosition(glm::vec3(0, 0, 0));
 
 		auto square2 = std::make_shared<Walnut::Square>();
-		square2->SetPosition(glm::vec3(0.5f, 0.2f, 0));
+		square2->SetPosition(glm::vec3(3, 2, 0));
 
 		auto square3 = std::make_shared<Walnut::Square>();
-		square3->SetPosition(glm::vec3(0.8f, 0, 0));
+		square3->SetPosition(glm::vec3(8, 4, 0));
 
 		mSquares.push_back(square);
 		mSquares.push_back(square2);
 		mSquares.push_back(square3);
+
+		Walnut::RenderCommand::EnableDepthTesting();
 	}
 
 	void OnImGuiRender(Walnut::Timestep ts) override
@@ -68,20 +76,10 @@ public:
 			r += cameraMoveSpeed * ts.GetSeconds();
 
 
-		mCamera.SetPosition(mCamera.GetPosition() + glm::vec3(x, y, 0));
-		mCamera.SetRotation(mCamera.GetRotation() + r);
+		mCamera->SetPosition(mCamera->GetPosition() + glm::vec3(x, y, 0));
+		mCamera->SetRotation(mCamera->GetRotation() + r);
 
-		Walnut::Renderer::BeginScene(mCamera);
-
-		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f, 0.5f, 0.5f));
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(-0.5f, 0, 0));
-		glm::mat4 transform2 = glm::translate(glm::mat4(1.0f), glm::vec3(0.5f, 0, 0));
-
-
-		/*std::dynamic_pointer_cast<Walnut::GLShader>(mShader)->UploadUniformFloat3("uColor", mSquareColor);
-		Walnut::Renderer::Submit(mShader, mVertexArray, transform * scale);
-		std::dynamic_pointer_cast<Walnut::GLShader>(mShader)->UploadUniformFloat3("uColor", mSquareColor2);
-		Walnut::Renderer::Submit(mShader, mVertexArray, transform2 * scale);*/
+		Walnut::Renderer::BeginScene(*mCamera);
 
 		for (const auto& square : mSquares)
 		{
@@ -132,6 +130,18 @@ public:
 				glm::vec3 color = mSquares[selected]->GetColor();
 				ImGui::ColorEdit3("Color", glm::value_ptr(color));
 				mSquares[selected]->SetColor(color);
+
+				//Texture#
+				uint32_t textureId = mSquares[selected]->GetTexture();
+				ImGui::Image((void*)textureId, ImVec2(50, 50), ImVec2(0, 0), ImVec2(1, 1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
+				ImGui::SameLine();
+				ImGui::Text("Texture");
+				ImGui::SameLine();
+				if (ImGui::Button("Load"))
+				{
+
+				}
+
 				ImGui::EndTabItem();
 			}
 			ImGui::EndTabBar();
@@ -214,7 +224,7 @@ public:
 	{
 		// FIXME-VIEWPORT-ABS: Select a default viewport
 		const float DISTANCE = 10.0f;
-		static int corner = 0;
+		static int corner = 2;
 		ImGuiIO& io = ImGui::GetIO();
 		if (corner != -1)
 		{
@@ -247,8 +257,8 @@ private:
 	std::vector<std::shared_ptr<Walnut::Square>> mSquares;
 	std::shared_ptr<Walnut::VertexArray> mVertexArray;
 	std::shared_ptr<Walnut::Shader> mShader;
+	std::shared_ptr<Walnut::Camera> mCamera;
 
-	Walnut::OrthographicCamera mCamera;
 	glm::vec3 mSquareColor;
 	glm::vec3 mSquareColor2;
 };

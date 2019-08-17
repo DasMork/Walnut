@@ -16,3 +16,11 @@ void Walnut::GLRendererAPI::DrawIndexed(const std::shared_ptr<VertexArray>& vert
 {
 	glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 }
+
+void Walnut::GLRendererAPI::EnableDepthTesting()
+{
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+}

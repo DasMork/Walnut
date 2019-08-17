@@ -1,5 +1,4 @@
 #include "wnpch.h"
-#include "Walnut/Graphics/Shader.h"
 #include "glad/glad.h"
 
 #include <glm/gtc/type_ptr.hpp>
@@ -11,12 +10,16 @@ Walnut::GLShader::GLShader()
 		#version 330 core
 		
 		layout(location = 0) in vec3 aPosition;
-		
+		layout(location = 1) in vec2 aTexCoord;	
+
 		uniform mat4 uViewProjection;
 		uniform mat4 uTransform;
 
+		out vec2 vTexCoord;
+		
 		void main()
 		{
+			vTexCoord = aTexCoord;
 			gl_Position = uViewProjection * uTransform * vec4(aPosition, 1.0);
 		}
 	)";
@@ -28,9 +31,13 @@ Walnut::GLShader::GLShader()
 		
 		uniform vec3 uColor;
 
+		in vec2 vTexCoord;
+
+		uniform sampler2D uTexture;
+
 		void main()
 		{
-			oColor = vec4(uColor, 1.0f);
+			oColor = texture(uTexture, vTexCoord) * vec4(uColor, 1.0);
 		}
 	
 	)";
