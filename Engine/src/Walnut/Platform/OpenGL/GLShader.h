@@ -10,6 +10,7 @@ namespace Walnut
 	public:
 		GLShader();
 		GLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
+		GLShader(const std::string& shaderType);
 		virtual ~GLShader();
 
 		void Bind() const override;

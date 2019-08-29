@@ -12,5 +12,6 @@ namespace Walnut
 
 		static Shader* CreateDefault();
 		static Shader* Create(const std::string& vertexSrc, const std::string& fragmentSrc);
+		static Shader* Create(const std::string& shaderType);
 	};
 }

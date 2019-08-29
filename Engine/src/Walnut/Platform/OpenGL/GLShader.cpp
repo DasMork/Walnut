@@ -4,9 +4,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "GLShader.h"
 
-Walnut::GLShader::GLShader()
-{
-	std::string vertexSrc = R"(
+std::string vertexSrc = R"(
 		#version 330 core
 		
 		layout(location = 0) in vec3 aPosition;
@@ -24,7 +22,25 @@ Walnut::GLShader::GLShader()
 		}
 	)";
 
-	std::string fragentSrc = R"(
+std::string fragentSrc = R"(
+		#version 330 core
+		
+		layout(location = 0) out vec4 oColor;
+		
+		uniform vec3 uColor;
+
+		in vec2 vTexCoord;
+
+		uniform sampler2D uTexture;
+
+		void main()
+		{
+			oColor = /*texture(uTexture, vTexCoord) * */vec4(uColor, 1.0);
+		}
+	
+	)";
+
+std::string textureFragentSrc = R"(
 		#version 330 core
 		
 		layout(location = 0) out vec4 oColor;
@@ -42,12 +58,30 @@ Walnut::GLShader::GLShader()
 	
 	)";
 
+Walnut::GLShader::GLShader()
+{
 	Init(vertexSrc, fragentSrc);
 }
 
 Walnut::GLShader::GLShader(const std::string & vertexSrc, const std::string & fragmentSrc)
 {
 	Init(vertexSrc, fragmentSrc);
+}
+
+Walnut::GLShader::GLShader(const std::string & shaderType)
+{
+	if (shaderType == "Flat Color")
+	{
+		Init(vertexSrc, fragentSrc);
+	}
+	else if (shaderType == "Default")
+	{
+		Init(vertexSrc, textureFragentSrc);
+	}
+	else
+	{
+		WN_CORE_ASSERT(false, "Unknown Shader!")
+	}
 }
 
 Walnut::GLShader::~GLShader()

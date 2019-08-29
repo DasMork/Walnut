@@ -30,7 +30,7 @@ void Walnut::PerspectiveCamera::CalculateMatrices()
 	glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
 	glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
 
-	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, 1.0f);
 
 	mViewMatrix = glm::lookAt(mPosition, mPosition + cameraFront, glm::vec3(0, 1, 0));
 
@@ -42,6 +42,6 @@ Walnut::PerspectiveCamera::PerspectiveCamera(float fov, float width, float heigh
 {
 	mPosition = glm::vec3(0, 0, 0);
 	mProjectionMatrix = glm::perspective(glm::radians(fov), width / height, nearPlane, farPlane);
-	mViewMatrix = glm::lookAt(mPosition, mPosition + glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0, 1, 0));
+	mViewMatrix = glm::lookAt(mPosition, mPosition + glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0, 1, 0));
 	mViewProjectionMatrix = mProjectionMatrix * mViewMatrix;
 }

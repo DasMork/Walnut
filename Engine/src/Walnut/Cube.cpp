@@ -30,6 +30,7 @@ Walnut::Cube::Cube(const glm::vec3 & color)
 		-1.0,  1.0, -1.0
 	};
 
+
 	std::shared_ptr<VertexBuffer> vertexbuffer;
 	vertexbuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
 

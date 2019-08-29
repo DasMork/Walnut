@@ -4,30 +4,40 @@
 #include "Walnut/Platform/OpenGL/GLShader.h"
 #include <glm/gtc/type_ptr.hpp>
 #include "Walnut/Cube.h"
+#include "Walnut/Components/RendererComp.h"
+#include "Walnut/Components/Transform.h"
 
 
 class SandboxLayer : public Walnut::Layer
 {
 public:
 	SandboxLayer(const std::string& name)
-		: Layer(name), mSquareColor({ 0,0,0 }), mSquareColor2({ 0,0,0 })
+		: Layer(name)
 	{
 		//mCamera.reset(new Walnut::OrthographicCamera(0, 16, 0, 9));
 		mCamera.reset(new Walnut::PerspectiveCamera(65, 16, 9, 0.1f, 100));
 		//mCamera->SetPosition({ 16, 9, 2 });
-		mCamera->SetPosition(glm::vec3(8, 4.5f, 10));
-		auto square = std::make_shared<Walnut::Square>();
-		square->SetPosition(glm::vec3(0, 0, 0));
+		mCamera->SetPosition(glm::vec3(8, 4.5f, -12));
+		/*	auto square = std::make_shared<Walnut::Square>();
+			square->SetPosition(glm::vec3(0, 0, 0));
 
-		auto square2 = std::make_shared<Walnut::Square>();
-		square2->SetPosition(glm::vec3(3, 2, 0));
+			auto square2 = std::make_shared<Walnut::Square>();
+			square2->SetPosition(glm::vec3(3, 2, 0));
 
-		auto square3 = std::make_shared<Walnut::Cube>();
-		square3->SetPosition(glm::vec3(8, 4, 0));
+			auto square3 = std::make_shared<Walnut::Cube>();
+			square3->SetPosition(glm::vec3(8, 4, 0));*/
 
-		mObjects.push_back(square);
-		mObjects.push_back(square2);
-		mObjects.push_back(square3);
+			//mObjects.push_back(square);
+			//mObjects.push_back(square2);
+			//mObjects.push_back(square3);
+
+		std::shared_ptr<Walnut::GameObject>object;
+		object.reset(new Walnut::GameObject("Test"));
+		object->AddComponent(new Walnut::Components::Transform(*object));
+		object->AddComponent(new Walnut::Components::RendererComp(*object));
+
+		object->GetComponent<Walnut::Components::Transform>()->SetPosition(glm::vec3(6, 0, 0));
+		mObjects.push_back(object);
 
 		Walnut::RenderCommand::EnableDepthTesting();
 	}
@@ -61,9 +71,9 @@ public:
 		float cameraMoveSpeed = 2;
 
 		if (Walnut::Input::GetKey(WN_KEY_D))
-			x += cameraMoveSpeed * ts.GetSeconds();
-		if (Walnut::Input::GetKey(WN_KEY_A))
 			x -= cameraMoveSpeed * ts.GetSeconds();
+		if (Walnut::Input::GetKey(WN_KEY_A))
+			x += cameraMoveSpeed * ts.GetSeconds();
 
 		if (Walnut::Input::GetKey(WN_KEY_W))
 			y += cameraMoveSpeed * ts.GetSeconds();
@@ -81,9 +91,13 @@ public:
 
 		Walnut::Renderer::BeginScene(*mCamera);
 
-		for (const auto& square : mObjects)
+
+		for (auto& obj : mObjects)
 		{
-			Walnut::Renderer::Submit(square);
+			for (auto& comp : obj->GetAllComponents())
+			{
+				comp->Update();
+			}
 		}
 
 		Walnut::Renderer::EndScene();
@@ -95,62 +109,12 @@ public:
 
 		static int selected = 0;
 		ImGui::BeginChild("left pane", ImVec2(150, 0), true);
-		int i = 0;
-		for (auto& square : mObjects)
-		{
-			if (ImGui::Selectable(square->GetName().c_str(), selected == i))
-				selected = i;
-			i++;
-		}
-		ImGui::EndChild();
-		ImGui::SameLine();
-
-		// right
-		ImGui::BeginGroup();
-		ImGui::BeginChild("item view", ImVec2(0, -ImGui::GetFrameHeightWithSpacing())); // Leave room for 1 line below us
-		if (ImGui::BeginTabBar("##Tabs", ImGuiTabBarFlags_None))
-		{
-			if (ImGui::BeginTabItem("Properties"))
-			{
-				ImGui::Text("Transform");
-
-				//Position
-				glm::vec3 pos = mObjects[selected]->GetPosition();
-				ImGui::InputFloat3("Position", glm::value_ptr(pos));
-				mObjects[selected]->SetPosition(pos);
-				//Scale
-				glm::vec3 scale = mObjects[selected]->GetScale();
-				ImGui::InputFloat3("Scale", glm::value_ptr(scale));
-				mObjects[selected]->SetScale(scale);
-
-				ImGui::Separator();
-				ImGui::Text("Material");
-
-				//Color
-				glm::vec3 color = mObjects[selected]->GetColor();
-				ImGui::ColorEdit3("Color", glm::value_ptr(color));
-				mObjects[selected]->SetColor(color);
-
-				//Texture
-				uint32_t textureId = mObjects[selected]->GetTexture();
-				ImGui::Image((void*)textureId, ImVec2(50, 50), ImVec2(0, 0), ImVec2(1, 1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
-				ImGui::SameLine();
-				ImGui::Text("Texture");
-				ImGui::SameLine();
-				if (ImGui::Button("Load"))
-				{
-
-				}
-
-				ImGui::EndTabItem();
-			}
-			ImGui::EndTabBar();
-		}
-		ImGui::EndChild();
 		if (ImGui::Button("Add"))
 		{
-			auto square = std::make_shared<Walnut::Square>();
-			mObjects.push_back(square);
+			std::shared_ptr<Walnut::GameObject> object;
+			object.reset(new Walnut::GameObject());
+			object->AddComponent(new Walnut::Components::Transform(*object));
+			mObjects.push_back(object);
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Remove"))
@@ -161,8 +125,115 @@ public:
 			if (selected < 0)
 				selected = 0;
 		}
+		int i = 0;
+		for (auto& square : mObjects)
+		{
+			if (ImGui::Selectable(square->GetName().c_str(), selected == i))
+				selected = i;
+			i++;
+		}
+
+		ImGui::EndChild();
+		ImGui::SameLine();
+
+		// right
+		ImGui::BeginGroup();
+		ImGui::BeginChild("item view", ImVec2(0, -ImGui::GetFrameHeightWithSpacing())); // Leave room for 1 line below us
+		if (ImGui::BeginTabBar("##Tabs", ImGuiTabBarFlags_None))
+		{
+			if (ImGui::BeginTabItem("Properties"))
+			{
+				for (const auto& comp : mObjects[selected]->GetAllComponents())
+				{
+					DisplayComponent(*comp);
+					ImGui::Separator();
+				}
+				static int listbox_item_current = -2;
+				if (ImGui::Button("Add Component"))
+				{
+					listbox_item_current = -1;
+				}
+
+				if (listbox_item_current == -1)
+				{
+					const char* listbox_items[] = { "Renderer" };
+					ImGui::ListBox("Components", &listbox_item_current, listbox_items, IM_ARRAYSIZE(listbox_items));
+
+					if (listbox_item_current > -1)
+					{
+						listbox_item_current = -2;
+						mObjects[selected]->AddComponent(new Walnut::Components::RendererComp(*mObjects[selected]));
+					}
+				}
+
+				ImGui::EndTabItem();
+			}
+			ImGui::EndTabBar();
+		}
+		ImGui::EndChild();
+
 		ImGui::EndGroup();
 		ImGui::End();
+	}
+
+	void DisplayComponent(const Walnut::Component& comp)
+	{
+		if (ImGui::CollapsingHeader(comp.GetName(), ImGuiTreeNodeFlags_DefaultOpen))
+		{
+			switch (comp.GetEventType())
+			{
+			case Walnut::Component::ComponentType::Transform:
+			{
+				Walnut::Components::Transform* t = (Walnut::Components::Transform*)&comp;
+
+				//Position
+				glm::vec3 pos = t->GetPosition();
+				ImGui::InputFloat3("Position", glm::value_ptr(pos));
+				t->SetPosition(pos);
+				//Scale
+				glm::vec3 scale = t->GetScale();
+				ImGui::InputFloat3("Scale", glm::value_ptr(scale));
+				t->SetScale(scale);
+				break;
+			}
+			case Walnut::Component::ComponentType::Renderer:
+			{
+				Walnut::Components::RendererComp* r = (Walnut::Components::RendererComp*)&comp;
+
+				const char* listbox_items[] = { "Flat Color", "Default" };
+
+				static const char* item_current = listbox_items[0];
+
+				if (ImGui::BeginCombo("Shader", item_current)) // The second parameter is the label previewed before opening the combo.
+				{
+					for (int n = 0; n < IM_ARRAYSIZE(listbox_items); n++)
+					{
+						bool is_selected = (item_current == listbox_items[n]);
+						if (ImGui::Selectable(listbox_items[n], is_selected))
+							item_current = listbox_items[n];
+						if (is_selected)
+							ImGui::SetItemDefaultFocus();   // Set the initial focus when opening the combo (scrolling + for keyboard navigation support in the upcoming navigation branch)
+					}
+					r->SetShader(item_current);
+					ImGui::EndCombo();
+				}
+
+				//Color
+				glm::vec3 color = r->GetColor();
+				ImGui::ColorEdit3("Color", glm::value_ptr(color));
+				r->SetColor(color);
+
+				if (item_current != "Default")
+					break;
+
+				ImTextureID my_tex_id = (ImTextureID)r->GetTexture()->GetID();
+				ImGui::Image(my_tex_id, ImVec2(100, 100), ImVec2(0, 1), ImVec2(1, 0), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
+				ImGui::SameLine();
+				ImGui::Text("Texture");
+				break;
+			}
+			}
+		}
 	}
 
 	void DrawDockSpace()
@@ -254,13 +325,8 @@ public:
 	}
 
 private:
-	std::vector<std::shared_ptr<Walnut::Renderable>> mObjects;
-	std::shared_ptr<Walnut::VertexArray> mVertexArray;
-	std::shared_ptr<Walnut::Shader> mShader;
+	std::vector<std::shared_ptr<Walnut::GameObject>> mObjects;
 	std::shared_ptr<Walnut::Camera> mCamera;
-
-	glm::vec3 mSquareColor;
-	glm::vec3 mSquareColor2;
 };
 
 class Sandbox : public Walnut::Application

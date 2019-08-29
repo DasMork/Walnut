@@ -19,3 +19,6 @@
 #include "Walnut/Graphics/VertexArray.h"
 #include "Walnut/Graphics/Shader.h"
 #include "Walnut/Graphics/Camera.h"
+
+#include "Walnut/GameObject.h"
+#include "Walnut/Component.h"

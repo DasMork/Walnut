@@ -26,3 +26,15 @@ Walnut::Shader * Walnut::Shader::Create(const std::string & vertexSrc, const std
 	WN_CORE_ASSERT(false, "Unknown RendererAPI");
 	return nullptr;
 }
+
+Walnut::Shader * Walnut::Shader::Create(const std::string & shaderType)
+{
+	switch (Renderer::GetAPI())
+	{
+	case RendererAPI::API::None: WN_CORE_ASSERT(false, "RendererAPI::None is currently not supported");
+	case RendererAPI::API::OpenGL: return new GLShader(shaderType);
+	}
+
+	WN_CORE_ASSERT(false, "Unknown RendererAPI");
+	return nullptr;
+}
