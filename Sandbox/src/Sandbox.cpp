@@ -6,6 +6,7 @@
 #include "Walnut/Cube.h"
 #include "Walnut/Components/RendererComp.h"
 #include "Walnut/Components/Transform.h"
+#include "Walnut/Platform/OpenGL/GLTexture.h"
 
 
 class SandboxLayer : public Walnut::Layer
@@ -33,8 +34,8 @@ public:
 
 		std::shared_ptr<Walnut::GameObject>object;
 		object.reset(new Walnut::GameObject("Test"));
-		object->AddComponent(new Walnut::Components::Transform(*object));
-		object->AddComponent(new Walnut::Components::RendererComp(*object));
+		object->AddComponent(new Walnut::Components::Transform());
+		object->AddComponent(new Walnut::Components::RendererComp());
 
 		object->GetComponent<Walnut::Components::Transform>()->SetPosition(glm::vec3(6, 0, 0));
 		mObjects.push_back(object);
@@ -113,7 +114,7 @@ public:
 		{
 			std::shared_ptr<Walnut::GameObject> object;
 			object.reset(new Walnut::GameObject());
-			object->AddComponent(new Walnut::Components::Transform(*object));
+			object->AddComponent(new Walnut::Components::Transform());
 			mObjects.push_back(object);
 		}
 		ImGui::SameLine();
@@ -162,7 +163,7 @@ public:
 					if (listbox_item_current > -1)
 					{
 						listbox_item_current = -2;
-						mObjects[selected]->AddComponent(new Walnut::Components::RendererComp(*mObjects[selected]));
+						mObjects[selected]->AddComponent(new Walnut::Components::RendererComp());
 					}
 				}
 
@@ -202,7 +203,7 @@ public:
 
 				const char* listbox_items[] = { "Flat Color", "Default" };
 
-				static const char* item_current = listbox_items[0];
+				const char* item_current = r->GetShader()->GetTypeName().c_str();
 
 				if (ImGui::BeginCombo("Shader", item_current)) // The second parameter is the label previewed before opening the combo.
 				{
@@ -223,13 +224,34 @@ public:
 				ImGui::ColorEdit3("Color", glm::value_ptr(color));
 				r->SetColor(color);
 
-				if (item_current != "Default")
-					break;
+				/*	if (item_current != "Default")
+						break;*/
 
-				ImTextureID my_tex_id = (ImTextureID)r->GetTexture()->GetID();
-				ImGui::Image(my_tex_id, ImVec2(100, 100), ImVec2(0, 1), ImVec2(1, 0), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
-				ImGui::SameLine();
-				ImGui::Text("Texture");
+
+						//Get Current Texture Path as char array
+				const std::string path = r->GetTexture()->GetPath();
+
+				char filePath[64] = "";
+				strncpy_s(filePath, path.c_str(), path.size());
+				filePath[path.size()] = 0;
+
+				ImGui::InputText("Texture: ", filePath, 64);
+
+				static std::shared_ptr<Walnut::Texture> t;
+				t.reset(Walnut::Texture::Create(filePath));
+
+				if (ImGui::Button("Load"))
+				{
+				}
+				if (t)
+				{
+					ImTextureID my_tex_id = (ImTextureID)t->GetID();
+					ImGui::Image(my_tex_id, ImVec2(100, 100), ImVec2(0, 1), ImVec2(1, 0), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
+					ImGui::SameLine();
+					ImGui::Text("Texture");
+
+					r->SetTexture(t);
+				}
 				break;
 			}
 			}

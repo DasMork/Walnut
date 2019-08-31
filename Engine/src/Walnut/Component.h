@@ -7,10 +7,6 @@ namespace Walnut
 	{
 	public:
 		Component() {}
-		Component(const GameObject& obj)
-			: mGameObject(obj)
-		{
-		}
 		virtual ~Component() = default;
 
 		enum class ComponentType
@@ -20,10 +16,9 @@ namespace Walnut
 			Renderer
 		};
 	public:
-		virtual void OnAdd() = 0;
+		virtual void OnAdd(const GameObject& obj) = 0;
 		virtual void Update() = 0;
 		virtual const char* GetName() const = 0;
-		void SetGameObject(const GameObject& obj) { mGameObject = obj; }
 		const GameObject& GetGameObject() const { return mGameObject; }
 		virtual ComponentType GetEventType() const = 0;
 

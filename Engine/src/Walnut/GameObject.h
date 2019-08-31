@@ -51,6 +51,7 @@ namespace Walnut
 		if (GetComponent<T>() != nullptr)
 			return;
 
+		comp->OnAdd(*this);
 		mComponents.push_back(comp);
 	}
 }

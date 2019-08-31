@@ -3,23 +3,10 @@
 #include "Walnut/Graphics/Renderer.h"
 #include "Transform.h"
 
-Walnut::Components::RendererComp::RendererComp(const GameObject& obj)
-	: Component(obj), mColor(glm::vec3(1, 1, 1))
+Walnut::Components::RendererComp::RendererComp()
+	: Component(), mColor(glm::vec3(1, 1, 1))
 {
 	mVertexArray.reset(VertexArray::Create());
-
-	float vertices[] = {
-		// front
-		-1.0, -1.0,  1.0,
-		 1.0, -1.0,  1.0,
-		 1.0,  1.0,  1.0,
-		-1.0,  1.0,  1.0,
-		// back
-		-1.0, -1.0, -1.0,
-		 1.0, -1.0, -1.0,
-		 1.0,  1.0, -1.0,
-		-1.0,  1.0, -1.0
-	};
 
 	float verticesWithTexCoords[] = {
 		// front 
@@ -38,25 +25,13 @@ Walnut::Components::RendererComp::RendererComp(const GameObject& obj)
 
 	std::shared_ptr<VertexBuffer> vertexbuffer;
 
-	Walnut::BufferLayout layout;
 
-	if (mTexture != nullptr)
-	{
-		vertexbuffer.reset(VertexBuffer::Create(verticesWithTexCoords, sizeof(verticesWithTexCoords)));
+	vertexbuffer.reset(VertexBuffer::Create(verticesWithTexCoords, sizeof(verticesWithTexCoords)));
 
-		layout = {
-			{Walnut::ShaderDataType::Float3, "aPosition"},
-			{Walnut::ShaderDataType::Float2, "aTexCoord"}
-		};
-	}
-	else
-	{
-		vertexbuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
-		layout = {
-			{Walnut::ShaderDataType::Float3, "aPosition"},
-		};
-
-	}
+	Walnut::BufferLayout layout = {
+		{Walnut::ShaderDataType::Float3, "aPosition"},
+		{Walnut::ShaderDataType::Float2, "aTexCoord"}
+	};
 	vertexbuffer->SetLayout(layout);
 
 	mVertexArray->AddVertexBuffer(vertexbuffer);
@@ -86,12 +61,13 @@ Walnut::Components::RendererComp::RendererComp(const GameObject& obj)
 	indexBuffer.reset(Walnut::IndexBuffer::Create(indices, 36));
 	mVertexArray->SetIndexBuffer(indexBuffer);
 
-	mShader.reset(Walnut::Shader::CreateDefault());
+	mShader.reset(Walnut::Shader::Create("Flat Color"));
 }
 
-void Walnut::Components::RendererComp::OnAdd()
-{
 
+void Walnut::Components::RendererComp::OnAdd(const GameObject& obj)
+{
+	mGameObject = obj;
 }
 
 void Walnut::Components::RendererComp::Update()

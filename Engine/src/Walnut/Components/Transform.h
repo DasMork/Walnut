@@ -10,9 +10,8 @@ namespace Walnut
 		{
 		public:
 			Transform();
-			Transform(const GameObject& obj);
 
-			void OnAdd() override;
+			void OnAdd(const GameObject& obj) override;
 			void Update() override;
 
 			void SetPosition(const glm::vec3& pos);

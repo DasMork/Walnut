@@ -8,13 +8,14 @@ namespace Walnut
 	class GLShader : public Shader
 	{
 	public:
-		GLShader();
-		GLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
 		GLShader(const std::string& shaderType);
+		GLShader(const std::string & name, const std::string & vertexSrc, const std::string & fragmentSrc);
 		virtual ~GLShader();
 
 		void Bind() const override;
 		void Unbind() const override;
+
+		const std::string& GetTypeName() const override { return mName; };
 
 		void UploadUniformInt(const std::string& name, int value);
 		void UploadUniformFloat(const std::string& name, float value);
@@ -28,5 +29,6 @@ namespace Walnut
 
 	private:
 		uint32_t mRenderID;
+		std::string mName;
 	};
 }

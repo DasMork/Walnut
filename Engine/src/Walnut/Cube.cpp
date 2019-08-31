@@ -67,7 +67,7 @@ Walnut::Cube::Cube(const glm::vec3 & color)
 	indexBuffer.reset(Walnut::IndexBuffer::Create(indices, 36));
 	mVertexArray->SetIndexBuffer(indexBuffer);
 
-	mShader.reset(Walnut::Shader::CreateDefault());
+	mShader.reset(Walnut::Shader::Create("Flat Color"));
 
 	CalculateTransform();
 }

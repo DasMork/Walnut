@@ -58,17 +58,14 @@ std::string textureFragentSrc = R"(
 	
 	)";
 
-Walnut::GLShader::GLShader()
-{
-	Init(vertexSrc, fragentSrc);
-}
-
-Walnut::GLShader::GLShader(const std::string & vertexSrc, const std::string & fragmentSrc)
+Walnut::GLShader::GLShader(const std::string & name, const std::string & vertexSrc, const std::string & fragmentSrc)
+	: mName(name)
 {
 	Init(vertexSrc, fragmentSrc);
 }
 
 Walnut::GLShader::GLShader(const std::string & shaderType)
+	: mName(shaderType)
 {
 	if (shaderType == "Flat Color")
 	{

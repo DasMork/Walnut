@@ -73,7 +73,7 @@ Walnut::Square::Square(const glm::vec3 & color)
 	indexBuffer.reset(Walnut::IndexBuffer::Create(indices, 6));
 	mVertexArray->SetIndexBuffer(indexBuffer);
 
-	mShader.reset(Walnut::Shader::CreateDefault());
+	mShader.reset(Walnut::Shader::Create("Default"));
 
 	CalculateTransform();
 }

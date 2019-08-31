@@ -6,6 +6,7 @@
 #include "glad/glad.h"
 
 Walnut::GLTexture::GLTexture(const std::string & filePath)
+	: mFilePath(filePath)
 {
 	glGenTextures(1, &mRendererID);
 	glBindTexture(GL_TEXTURE_2D, mRendererID);

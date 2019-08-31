@@ -11,7 +11,9 @@ namespace Walnut
 		void Unbind() const override;
 
 		uint32_t GetID() const override { return mRendererID; }
+		const std::string& GetPath() const override { return mFilePath; }
 	private:
 		uint32_t mRendererID;
+		const std::string mFilePath;
 	};
 }

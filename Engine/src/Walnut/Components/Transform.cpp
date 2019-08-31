@@ -7,14 +7,9 @@ Walnut::Components::Transform::Transform()
 {
 }
 
-Walnut::Components::Transform::Transform(const GameObject& obj)
-	: Component(obj), mPosition(glm::vec3(0, 0, 0)), mScale(glm::vec3(1, 1, 1))
+void Walnut::Components::Transform::OnAdd(const GameObject& obj)
 {
-	mTransform = glm::mat4(1.0f);
-}
-
-void Walnut::Components::Transform::OnAdd()
-{
+	mGameObject = obj;
 }
 
 void Walnut::Components::Transform::Update()

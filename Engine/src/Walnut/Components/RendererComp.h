@@ -12,8 +12,8 @@ namespace Walnut
 		class RendererComp : public Component
 		{
 		public:
-			RendererComp(const GameObject& obj);
-			void OnAdd() override;
+			RendererComp();
+			void OnAdd(const GameObject& obj) override;
 			void Update() override;
 			ComponentType GetEventType() const override { return GetStaticType(); }
 			static ComponentType GetStaticType() { return ComponentType::Renderer; }
@@ -21,6 +21,7 @@ namespace Walnut
 			const char* GetName()  const override { return "Renderer"; }
 			void SetColor(const glm::vec3& color) { mColor = color; }
 			void SetShader(const std::shared_ptr<Shader>& shader) { mShader = shader; }
+			void SetTexture(const std::shared_ptr<Texture>& texture) { mTexture = texture; }
 			void SetShader(const std::string & shaderType);
 			const glm::vec3& GetColor() const { return mColor; }
 			const std::shared_ptr<Shader>& GetShader() const { return mShader; }
